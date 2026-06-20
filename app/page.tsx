@@ -54,18 +54,31 @@ export default function FarmerDashboard() {
 
   const status = getStatusColor(ghiScore);
 
+  // Replace your existing handleRunScan function with this one:
   const handleRunScan = async () => {
     try {
-      // Temporarily points to a generic endpoint or tests calculations locally
-      const mockGhi = Math.floor(Math.random() * (100 - 30) + 30);
-      setGhiScore(mockGhi);
-      if (mockGhi < 80) {
-        setLossInr((80 - mockGhi) * 150);
-      } else {
-        setLossInr(0);
-      }
+      // Import apiClient or use a direct fetch inside the component
+      const response = await fetch('https://grain-guardian-backend.onrender.com/api/v1/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: "00000000-0000-0000-0000-000000000000", // Our verified test user UUID
+          crop_type: cropType,
+          moisture: moisture,
+          temperature: temp,
+          humidity: humidity,
+          stored_mass_kg: 1000.0
+        })
+      });
+
+      const result = await response.json();
+      
+      // Dynamically update the UI dashboard states with live cloud math answers
+      setGhiScore(result.grain_health_index);
+      setLossInr(result.estimated_financial_loss_inr);
+      
     } catch (error) {
-      console.error(error);
+      console.error("Failed to connect with analytical cloud engine:", error);
     }
   };
 
