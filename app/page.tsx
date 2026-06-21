@@ -2,31 +2,56 @@
 
 import React, { useState, useEffect } from "react";
 
+// 1. TypeScript ఇంటర్‌ఫేస్ టైప్‌ను స్పష్టంగా డిఫైన్ చేయడం
+interface UIText {
+  title: string;
+  tagline: string;
+  cta: string;
+  heroHead: string;
+  heroSub: string;
+  readinessLabel: string;
+  safe: string;
+  unsafe: string;
+  ghiLabel: string;
+  conditionExcellent: string;
+  conditionWarning: string;
+  riskLabel: string;
+  riskDesc: string;
+  riskDescHigh: string;
+  financialLabel: string;
+  weightLoss: string;
+  controlsLabel: string;
+  actionsLabel: string;
+  ledgerLabel: string;
+  downloadCta: string;
+  farmerMode: string; // Vercel లోపం నివారణకు జోడించబడింది
+  expertMode: string;  // Vercel లోపం నివారణకు జోడించబడింది
+}
+
 export default function PremiumProductExperience() {
-  // Navigation & Viewport State Controllers
-  const [isTelugu, setIsTelugu] = useState(false);
-  const [isExpertMode, setIsExpertMode] = useState(false);
+  // అప్లికేషన్ కంట్రోల్ స్టేట్స్
+  const [isTelugu, setIsTelugu] = useState<boolean>(false);
+  const [isExpertMode, setIsExpertMode] = useState<boolean>(false);
 
-  // Core Simulation Variables
-  const [cropType, setCropType] = useState("Paddy (Rice)");
-  const [moisture, setMoisture] = useState(14.0);
-  const [temperature, setTemperature] = useState(34.0);
-  const [humidity, setHumidity] = useState(65.0);
-  const [mass, setMass] = useState(12000);
+  // సిమ్యులేషన్ పారామితుల స్టేట్స్
+  const [cropType, setCropType] = useState<string>("Paddy (Rice)");
+  const [moisture, setMoisture] = useState<number>(14.0);
+  const [temperature, setTemperature] = useState<number>(34.0);
+  const [humidity, setHumidity] = useState<number>(65.0);
+  const [mass, setMass] = useState<number>(12000);
 
-  // Response Engine State
+  // బ్యాకెండ్ అనలిటిక్స్ రెస్పాన్స్ స్టేట్
   const [metrics, setMetrics] = useState({
     ghi: 92,
     lossInr: 12540,
     lossKg: 240,
     riskLevel: "LOW",
-    advisories: [],
+    advisories: [] as string[],
     violations: { moisture: false, temp: false, humidity: false }
   });
 
-  // Strict Translation Maps (No Transliteration)
-  // Translation Dictionaries (Strict Translation, No Transliteration)
-  const lexicons = {
+  // 2. ఖచ్చితమైన తెలుగు అనువాద డిక్షనరీ (ట్రాన్స్లిటరేషన్ కాదు)
+  const lexicons: { en: UIText; te: UIText } = {
     en: {
       title: "GRAINGUARDIAN",
       tagline: "Storage Intelligence for Post-Harvest Decisions",
@@ -48,38 +73,38 @@ export default function PremiumProductExperience() {
       actionsLabel: "Recommended Actions",
       ledgerLabel: "Recent Assessments",
       downloadCta: "Download Assessment Report",
-      farmerMode: "Farmer Mode",       // <-- ADD THIS
-      expertMode: "Expert Mode"        // <-- ADD THIS
+      farmerMode: "Farmer",
+      expertMode: "Expert"
     },
     te: {
       title: "ధాన్యసంరక్షకుడు",
-      tagline: "పంట అనంతర నిర్ణయాల నిల్వ ఇంటెలిజెన్స్",
-      cta: "పరిశీలన ప్రారంభించండి",
+      tagline: "పంట అనంతర నిల్వ నిర్ణయాల కోసం తెలివైన వేదిక",
+      cta: "అంచనాను ప్రారంభించండి",
       heroHead: "ఎప్పుడు నిల్వ చేయాలో తెలుసుకోండి.\nఎప్పుడు చర్య తీసుకోవాలో తెలుసుకోండి.",
-      heroSub: "ధాన్య परिस्थितियोंని అంచనా వేయండి, నిల్వ ప్రమాదాలను అర్థం చేసుకోండి మరియు స్పష్టమైన సిఫార్సులను పొందండి.",
+      heroSub: "ధాన్య పరిస్థితులను అంచనా వేసి, నిల్వ ప్రమాదాలను అర్థం చేసుకొని, స్పష్టమైన సూచనలు పొందండి.",
       readinessLabel: "నిల్వ సంసిద్ధత",
       safe: "నిల్వకు సురక్షితం",
       unsafe: "ఆరబెట్టడం కొనసాగించండి",
       ghiLabel: "ధాన్య ఆరోగ్య సూచిక",
       conditionExcellent: "అద్భుతమైన పరిస్థితి",
-      conditionWarning: "చర్య తీసుకోవలసి ఉంది",
+      conditionWarning: "చర్య తీసుకో వలసి ఉంది",
       riskLabel: "నిల్వ ప్రమాదం",
       riskDesc: "ప్రస్తుత పరిస్థితులు ధాన్య నిల్వ క్షీణతకు తక్కువ సంభావ్యతను సూచిస్తున్నాయి.",
-      riskDescHigh: "వెنتనే ఉష్ణోగ్రత మరియు తేమ స్థిరీకరణ నిబంధనలు అవసరం.",
+      riskDescHigh: "వెంటనే ఉష్ణోగ్రత మరియు తేమ స్థిరీకరణ నిబంధనలు అవసరం.",
       financialLabel: "సాధ్యమయ్యే ఆర్థిక నష్టం",
       weightLoss: "అంచనా వేసిన బరువు నష్టం:",
       controlsLabel: "నిల్వ పారామితుల పరిశీలన",
       actionsLabel: "సిఫార్సు చేయబడిన చర్యలు",
       ledgerLabel: "ఇటీవలి పరిశీలనలు",
       downloadCta: "ధాన్య మూల్యాంకన నివేదికను డౌన్‌లోడ్ చేయండి",
-      farmerMode: "రైతు మోడ్",       // <-- ADD THIS
-      expertMode: "నిపుణుల మోడ్"     // <-- ADD THIS
+      farmerMode: "రైతు",
+      expertMode: "నిపుణుడు"
     }
   };
 
   const UI = isTelugu ? lexicons.te : lexicons.en;
 
-  // Realtime Analysis Pass to Live FastAPI Backend Configuration
+  // FastAPI బ్యాకెండ్ ఇంజిన్‌కు కనెక్ట్ చేసే లైవ్ ఎఫెక్ట్ పైప్‌లైన్
   useEffect(() => {
     async function triggerComputePass() {
       try {
@@ -119,7 +144,7 @@ export default function PremiumProductExperience() {
   return (
     <div className="min-h-screen bg-slate-950 text-white scroll-smooth overflow-x-hidden">
       
-      {/* MINIMAL CHROME NAVIGATION */}
+      {/* 3. మినిమలిస్టిక్ ఆపిల్-ఇన్‌స్పెక్టెడ్ నావిగేషన్ క్రోమ్ */}
       <nav className="fixed top-0 left-0 w-full h-[72px] border-b border-white/5 bg-slate-950/60 backdrop-blur-2xl z-50 px-8 flex items-center justify-between">
         <div className="flex flex-col">
           <span className="text-sm font-black tracking-widest text-white">{UI.title}</span>
@@ -136,6 +161,7 @@ export default function PremiumProductExperience() {
           
           <div className="h-4 w-[1px] bg-white/10" />
 
+          {/* ఇప్పుడు ఎర్రర్ లేకుండా కరెక్ట్‌గా పనిచేసే డ్యూయల్ మోడ్ స్విచ్ */}
           <button 
             onClick={() => setIsExpertMode(!isExpertMode)} 
             className="text-xs font-bold tracking-wider text-slate-400 hover:text-white transition"
@@ -149,8 +175,8 @@ export default function PremiumProductExperience() {
         </div>
       </nav>
 
-      {/* SECTION 1: CULMINATING HERO */}
-      <section className="min-h-screen container max-w-[1600px] mx-auto px-6 flex flex-col justify-center items-center text-center space-y-8 pt-20 relative">
+      {/* సెక్షన్ 1: హేరో పేజీ */}
+      <section className="min-h-screen container max-w-[1600px] mx-auto px-6 flex flex-col justify-center items-center text-center space-y-8 pt-20">
         <div className="space-y-4 animate-fade-in">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight whitespace-pre-line leading-[0.95] text-white">
             {UI.heroHead}
@@ -164,7 +190,7 @@ export default function PremiumProductExperience() {
         </a>
       </section>
 
-      {/* SECTION 2: STORAGE READINESS */}
+      {/* సెక్షన్ 2: స్టోరేజ్ సంసిద్ధత (READINESS) */}
       <section className="premium-section min-h-[90vh] bg-slate-900/10 text-center px-6 border-t border-white/5">
         <span className="story-label">{UI.readinessLabel}</span>
         <h2 className={`text-6xl md:text-8xl font-black tracking-tighter mt-6 transition duration-500 ${
@@ -174,12 +200,12 @@ export default function PremiumProductExperience() {
         </h2>
         <p className="text-slate-400 mt-4 max-w-md text-sm md:text-base font-medium">
           {isExpertMode && Object.values(metrics.violations).some(Boolean)
-            ? `Active Parameter Deviations: ${metrics.violations.moisture ? 'Moisture Spikes ' : ''}${metrics.violations.temp ? 'Thermal Overload' : ''}`
+            ? `Active Parameters: ${metrics.violations.moisture ? 'Moisture Spikes ' : ''}${metrics.violations.temp ? 'Thermal Overload' : ''}`
             : UI.riskDesc}
         </p>
       </section>
 
-      {/* SECTION 3: GRAIN HEALTH SCORE */}
+      {/* సెక్షన్ 3: ధాన్య ఆరోగ్య స్కోర్ */}
       <section className="premium-section text-center px-6">
         <span className="story-label">{UI.ghiLabel}</span>
         <div className="giant-stat text-emerald-400 mt-4 font-black">{metrics.ghi}</div>
@@ -188,7 +214,7 @@ export default function PremiumProductExperience() {
         </span>
       </section>
 
-      {/* SECTION 4: STORAGE RISK */}
+      {/* సెక్షన్ 4: స్టోరేజ్ రిస్క్ అంచనా */}
       <section className="premium-section text-center bg-slate-900/10 px-6 border-y border-white/5">
         <span className="story-label">{UI.riskLabel}</span>
         <h2 className={`text-7xl md:text-9xl font-black tracking-tight mt-4 ${
@@ -199,7 +225,7 @@ export default function PremiumProductExperience() {
         </p>
       </section>
 
-      {/* SECTION 5: POTENTIAL FINANCIAL IMPACT */}
+      {/* సెక్షన్ 5: ఆర్థిక నష్టం అంచనా */}
       <section className="premium-section text-center px-6">
         <span className="story-label">{UI.financialLabel}</span>
         <div className="giant-stat text-red-400 mt-4 font-black">
@@ -210,7 +236,7 @@ export default function PremiumProductExperience() {
         </p>
       </section>
 
-      {/* SECTION 6: INTERACTIVE MOLECULE CONTROLS */}
+      {/* సెక్షన్ 6: ఇంటరాక్టివ్ కంట్రోల్స్ స్లైడర్స్ */}
       <section id="assess" className="premium-section px-6 border-t border-white/5 scroll-mt-20">
         <div className="w-full max-w-3xl space-y-12">
           <div className="text-center">
@@ -255,6 +281,7 @@ export default function PremiumProductExperience() {
               <input type="range" min="20" max="95" step="1" value={humidity} onChange={(e) => setHumidity(parseFloat(e.target.value))} className="w-full accent-yellow-400 bg-slate-800 h-1 rounded-lg appearance-none" />
             </div>
 
+            {/* ఎక్స్‌పర్ట్ మోడ్‌లో మాత్రమే కనిపించే అధునాతన మాస్ స్లైడర్ */}
             {isExpertMode && (
               <div className="space-y-3 pt-4 border-t border-white/5 animate-fade-in">
                 <div className="flex justify-between text-sm font-medium">
@@ -268,7 +295,7 @@ export default function PremiumProductExperience() {
         </div>
       </section>
 
-      {/* SECTION 7 & 8: RECOMMENDED CONTEXTUAL ACTIONS */}
+      {/* సెక్షన్ 7: సిఫార్సు చేయబడిన నిర్ధారణ ప్యానెల్ */}
       <section className="premium-section px-6 bg-slate-900/10 border-t border-white/5">
         <div className="w-full max-w-4xl space-y-12">
           <div className="text-center">
@@ -299,7 +326,7 @@ export default function PremiumProductExperience() {
         </div>
       </section>
 
-      {/* SECTION 9: RECENT TIMELINE LEDGER */}
+      {/* సెక్షన్ 8: ఇటీవలి రికార్డుల టైమ్‌లైన్ */}
       <section className="premium-section px-6">
         <div className="w-full max-w-xl space-y-10">
           <div className="text-center">
@@ -330,7 +357,7 @@ export default function PremiumProductExperience() {
         </div>
       </section>
 
-      {/* SECTION 10: METADATA COMPILER EXPORT */}
+      {/* సెక్షన్ 9: నివేదికను డౌన్‌లోడ్ చేసే బటన్ */}
       <section className="premium-section text-center px-6 border-t border-white/5 bg-slate-900/20">
         <button className="bg-white text-slate-950 font-bold text-xs tracking-widest px-8 py-4 rounded-xl hover:bg-slate-200 transition-all uppercase font-mono shadow-xl shadow-white/5">
           {UI.downloadCta}
