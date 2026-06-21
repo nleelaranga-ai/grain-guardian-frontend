@@ -25,6 +25,7 @@ export default function PremiumProductExperience() {
   });
 
   // Strict Translation Maps (No Transliteration)
+  // Translation Dictionaries (Strict Translation, No Transliteration)
   const lexicons = {
     en: {
       title: "GRAINGUARDIAN",
@@ -46,14 +47,16 @@ export default function PremiumProductExperience() {
       controlsLabel: "Storage Assessment",
       actionsLabel: "Recommended Actions",
       ledgerLabel: "Recent Assessments",
-      downloadCta: "Download Assessment Report"
+      downloadCta: "Download Assessment Report",
+      farmerMode: "Farmer Mode",       // <-- ADD THIS
+      expertMode: "Expert Mode"        // <-- ADD THIS
     },
     te: {
       title: "ధాన్యసంరక్షకుడు",
       tagline: "పంట అనంతర నిర్ణయాల నిల్వ ఇంటెలిజెన్స్",
       cta: "పరిశీలన ప్రారంభించండి",
       heroHead: "ఎప్పుడు నిల్వ చేయాలో తెలుసుకోండి.\nఎప్పుడు చర్య తీసుకోవాలో తెలుసుకోండి.",
-      heroSub: "ధాన్య పరిస్థితులను అంచనా వేయండి, నిల్వ ప్రమాదాలను అర్థం చేసుకోండి మరియు స్పష్టమైన సిఫార్సులను పొందండి.",
+      heroSub: "ధాన్య परिस्थितियोंని అంచనా వేయండి, నిల్వ ప్రమాదాలను అర్థం చేసుకోండి మరియు స్పష్టమైన సిఫార్సులను పొందండి.",
       readinessLabel: "నిల్వ సంసిద్ధత",
       safe: "నిల్వకు సురక్షితం",
       unsafe: "ఆరబెట్టడం కొనసాగించండి",
@@ -62,13 +65,15 @@ export default function PremiumProductExperience() {
       conditionWarning: "చర్య తీసుకోవలసి ఉంది",
       riskLabel: "నిల్వ ప్రమాదం",
       riskDesc: "ప్రస్తుత పరిస్థితులు ధాన్య నిల్వ క్షీణతకు తక్కువ సంభావ్యతను సూచిస్తున్నాయి.",
-      riskDescHigh: "వెంటనే ఉష్ణోగ్రత మరియు తేమ స్థిరీకరణ నిబంధనలు అవసరం.",
+      riskDescHigh: "వెنتనే ఉష్ణోగ్రత మరియు తేమ స్థిరీకరణ నిబంధనలు అవసరం.",
       financialLabel: "సాధ్యమయ్యే ఆర్థిక నష్టం",
       weightLoss: "అంచనా వేసిన బరువు నష్టం:",
       controlsLabel: "నిల్వ పారామితుల పరిశీలన",
       actionsLabel: "సిఫార్సు చేయబడిన చర్యలు",
       ledgerLabel: "ఇటీవలి పరిశీలనలు",
-      downloadCta: "ధాన్య మూల్యాంకన నివేదికను డౌన్‌లోడ్ చేయండి"
+      downloadCta: "ధాన్య మూల్యాంకన నివేదికను డౌన్‌లోడ్ చేయండి",
+      farmerMode: "రైతు మోడ్",       // <-- ADD THIS
+      expertMode: "నిపుణుల మోడ్"     // <-- ADD THIS
     }
   };
 
