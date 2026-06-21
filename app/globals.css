@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* High-Fidelity Data Analytics Palettes */
+  /* High-Contrast Professional SaaS Palettes */
   --color-slate-950: #020617;
   --color-slate-900: rgba(15, 23, 42, 0.65);
   --color-emerald-400: #00FF9D;
@@ -11,11 +11,11 @@
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
 
-  --animate-fade-in: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-glow-pulse: glowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
-  @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(6px); }
-    100% { opacity: 1; transform: translateY(0); }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.05); }
   }
 }
 
@@ -29,8 +29,8 @@
   }
 }
 
-/* 70% Content / 30% Space High Density Layout Systems */
-.saas-container {
+/* 70% Content / 30% Whitespace Dense SaaS Constraints */
+.mode-container {
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
@@ -38,54 +38,94 @@
   padding-right: clamp(16px, 4vw, 48px);
 }
 
-.saas-grid-card {
+.mode-section-padding {
+  padding-top: clamp(48px, 6vw, 96px);
+  padding-bottom: clamp(48px, 6vw, 96px);
+}
+
+/* Frosted Premium Ambient Matrix Cards */
+.mode-card {
   background: rgba(15, 23, 42, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  transition: all 0.2s ease-in-out;
+  border-radius: 24px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.saas-grid-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 217, 255, 0.25);
-  background: rgba(22, 32, 54, 0.8);
+.mode-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 217, 255, 0.3);
+  box-shadow: 0 20px 40px -15px rgba(2, 6, 23, 0.7);
 }
 
-.saas-label {
-  font-size: 0.7rem;
+/* Ambient Magic Glow Drops Base Elements */
+.neon-magic-drop {
+  position: relative;
+}
+.neon-magic-drop::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00D9FF, #00FF9D, transparent);
+  box-shadow: 0 2px 12px rgba(0, 217, 255, 0.6);
+  border-radius: 999px;
+}
+
+.compact-label {
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-text-secondary);
 }
 
-/* Custom Interactive Compact Sliders */
+/* Webkit Input Telemetry Slider Overrides */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
+  height: 6px;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
   outline: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background: #00D9FF;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
   cursor: pointer;
+  transition: transform 0.15s ease;
 }
 
-/* Print Layout System Override */
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+/* Print Telemetry Stylesheet Override (PDF Certificate Specs) */
 @media print {
-  body { background: white; color: black; }
-  nav, input, select, button { display: none !important; }
-  .saas-grid-card { border: 1px solid #cbd5e1; background: transparent; backdrop-filter: none; }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  nav, .input-panel-wrapper, button, input, select {
+    display: none !important;
+  }
+  .mode-card {
+    background: transparent !important;
+    border: 1px solid #000000 !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    margin-bottom: 20px;
+    page-break-inside: avoid;
+  }
 }
