@@ -1,21 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* High-Contrast Professional SaaS Palettes */
-  --color-slate-950: #020617;
-  --color-slate-900: rgba(15, 23, 42, 0.65);
-  --color-emerald-400: #00FF9D;
-  --color-cyan-400: #00D9FF;
-  --color-yellow-400: #FACC15;
-  --color-red-400: #FF5A5F;
+  /* Google AI Studio Inspired Color Palette */
+  --color-slate-950: #020617; /* Deep workspace vacuum background */
+  --color-surface-primary: rgba(15, 23, 42, 0.72); /* Main container layout background */
+  --color-surface-secondary: rgba(15, 23, 42, 0.55); /* Nested analytics panels background */
+  --color-studio-border: rgba(255, 255, 255, 0.06); /* Thin crisp component separators */
+  
+  --color-safe-green: #00FF9D; /* Nominal tier / Compliant state */
+  --color-accent-cyan: #00D9FF; /* Telemetry charts & focus nodes */
+  --color-warning-yellow: #FACC15; /* Mid-tier caution boundary */
+  --color-critical-red: #FF5A5F; /* High-risk asset deterioration */
+  
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
 
-  --animate-glow-pulse: glowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  /* Studio Motion Curves */
+  --animate-studio-fade: studioFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
-  @keyframes glowPulse {
-    0%, 100% { opacity: 0.2; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(1.05); }
+  @keyframes studioFade {
+    0% { opacity: 0; transform: translateY(6px); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
   }
 }
 
@@ -23,14 +28,14 @@
   body {
     background-color: var(--color-slate-950);
     color: var(--color-text-primary);
-    font-family: "Inter", -apple-system, sans-serif;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     letter-spacing: -0.01em;
   }
 }
 
-/* 70% Content / 30% Whitespace Dense SaaS Constraints */
-.mode-container {
+/* Studio high-density workspace responsive alignment wrappers */
+.studio-container {
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
@@ -38,44 +43,28 @@
   padding-right: clamp(16px, 4vw, 48px);
 }
 
-.mode-section-padding {
-  padding-top: clamp(48px, 6vw, 96px);
-  padding-bottom: clamp(48px, 6vw, 96px);
+.studio-section {
+  padding-top: clamp(48px, 5vw, 96px);
+  padding-bottom: clamp(48px, 5vw, 96px);
+  border-bottom: 1px solid var(--color-studio-border);
 }
 
-/* Frosted Premium Ambient Matrix Cards */
-.mode-card {
-  background: rgba(15, 23, 42, 0.65);
+/* Glassmorphic Panel Systems */
+.studio-panel {
+  background: var(--color-surface-primary);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 24px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--color-studio-border);
+  border-radius: 12px; /* Crisp developer tool corner radius */
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.mode-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 217, 255, 0.3);
-  box-shadow: 0 20px 40px -15px rgba(2, 6, 23, 0.7);
+.studio-panel:hover {
+  border-color: rgba(0, 217, 255, 0.2);
+  box-shadow: 0 12px 24px -10px rgba(2, 6, 23, 0.8);
 }
 
-/* Ambient Magic Glow Drops Base Elements */
-.neon-magic-drop {
-  position: relative;
-}
-.neon-magic-drop::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 10%;
-  width: 80%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00D9FF, #00FF9D, transparent);
-  box-shadow: 0 2px 12px rgba(0, 217, 255, 0.6);
-  border-radius: 999px;
-}
-
-.compact-label {
+.studio-label {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -83,49 +72,48 @@
   color: var(--color-text-secondary);
 }
 
-/* Webkit Input Telemetry Slider Overrides */
+/* Unified Custom Workspace Range Sliders */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 6px;
-  background: rgba(2, 6, 23, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 999px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
   outline: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: #00D9FF;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
   cursor: pointer;
-  transition: transform 0.15s ease;
+  box-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
+  transition: transform 0.1s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.25);
 }
 
-/* Print Telemetry Stylesheet Override (PDF Certificate Specs) */
+/* Precise double-column print layout override for biological verification certificate exports */
 @media print {
   body {
     background: #ffffff !important;
     color: #000000 !important;
   }
-  nav, .input-panel-wrapper, button, input, select {
+  nav, .studio-control-inputs, button, input, select {
     display: none !important;
   }
-  .mode-card {
+  .studio-panel {
     background: transparent !important;
     border: 1px solid #000000 !important;
     color: #000000 !important;
     box-shadow: none !important;
-    margin-bottom: 20px;
     page-break-inside: avoid;
+    border-radius: 4px;
   }
 }
