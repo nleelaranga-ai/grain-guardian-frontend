@@ -24,79 +24,82 @@ interface UIText {
   weightLoss: string;
 }
 
-export default function ModeInspiredAnalyticsSuite() {
+export default function ModeAnalyticsDashboard() {
   const [isTelugu, setIsTelugu] = useState<boolean>(false);
   const [isExpertMode, setIsExpertMode] = useState<boolean>(false);
 
-  // Environment & Commodities Parameter States
+  // Core Simulation States
   const [cropType, setCropType] = useState<string>("Paddy (Rice)");
-  const [moisture, setMoisture] = useState<number>(14.0);
-  const [temperature, setTemperature] = useState<number>(32.0);
-  const [humidity, setHumidity] = useState<number>(60.0);
-  const [mass, setMass] = useState<number>(15000);
+  const [moisture, setMoisture] = useState<number>(14.5);
+  const [temperature, setTemperature] = useState<number>(28.0);
+  const [humidity, setHumidity] = useState<number>(72.0);
+  const [mass, setMass] = useState<number>(50);
 
-  // Computed Analytical Store Object
+  // Analysis Store Engine Sync
   const [analytics, setAnalytics] = useState({
-    ghi: 92,
-    lossInr: 12540,
-    lossKg: 240,
-    riskLevel: "LOW",
-    advisories: [] as string[],
-    violations: { moisture: false, temp: false, humidity: false }
+    ghi: 78,
+    lossInr: 20900,
+    lossKg: 420,
+    riskLevel: "MEDIUM",
+    advisories: [
+      "Continue Drying Cycles: Critical moisture warning. Bring batch down to safety limit.",
+      "Manage Ventilation Aeration: Warm lot temperature acts as biological catalyst for micro-infestation."
+    ] as string[],
+    violations: { moisture: true, temp: true, humidity: true }
   });
 
   const lexicons: { en: UIText; te: UIText } = {
     en: {
       title: "GRAINGUARDIAN",
       tagline: "Storage Intelligence for Post-Harvest Decisions",
-      cta: "Analyze System",
-      viewDemo: "Reference Logs",
+      cta: "Start Storage Assessment",
+      viewDemo: "Load Wet Batch (Demo)",
       heroHead: "Know when to store.\nKnow when to act.",
-      heroSub: "Assess grain conditions, understand complex storage risks, predict multi-crop degradation, and optimize financial returns.",
-      readinessLabel: "Storage Readiness Matrix",
-      safe: "Safe to Store",
-      unsafe: "Continue Drying Plan",
-      ghiLabel: "Grain Health Index (GHI)",
-      riskLabel: "Calculated Degradation Risk",
-      financialLabel: "Estimated Spoilage Impact",
-      weightLoss: "Projected Mass Deficit:",
-      controlsLabel: "Environmental Telemetry Simulation Node",
-      actionsLabel: "Prescriptive Operational Directives",
-      ledgerLabel: "Historical Assessment Log Stream",
-      downloadCta: "Compile Evaluation Document (PDF)",
-      farmerMode: "Farmer Node",
+      heroSub: "Assess grain bulk conditions, understand complex physiological storage risks, predict potential financial deterioration, and secure direct scientific recommendations.",
+      readinessLabel: "Live Intelligence Analysis",
+      safe: "STORAGE COMPLIANT / SAFE",
+      unsafe: "ATTENTION / ACTION REQUIRED",
+      ghiLabel: "Grain Health Score",
+      riskLabel: "Calculated Storage Risk",
+      financialLabel: "Potential Financial Impact",
+      weightLoss: "Projected Weight Deficit:",
+      controlsLabel: "Harvest Integrity Analytics Node",
+      actionsLabel: "Preservation Guidelines & Tactical Actions",
+      ledgerLabel: "Telemetry Assessment Log & History",
+      downloadCta: "Generate Professional PDF Report",
+      farmerMode: "Farmer View",
       expertMode: "Expert Matrix"
     },
     te: {
       title: "ధాన్యసంరక్షకుడు",
       tagline: "పంట అనంతర నిల్వ నిర్ణయాల విశ్లేషణ వేదిక",
-      cta: "ధాన్య పరిశీలన",
-      viewDemo: "రిఫరెన్స్ లాగ్‌లు",
+      cta: "పరిశీలన ప్రారంభించండి",
+      viewDemo: "వెట్ బ్యాచ్ లోడ్ చేయండి",
       heroHead: "ఎప్పుడు నిల్వ చేయాలో తెలుసుకోండి.\nఎప్పుడు చర్య తీసుకోవాలో తెలుసుకోండి.",
-      heroSub: "ధాన్య పరిస్థితులను ఖచ్చితంగా అంచనా వేసి, నిల్వ ప్రమాదాలను అర్థం చేసుకొని, సంభావ్య నష్టాలను నివారించండి.",
-      readinessLabel: "నిల్వ సంసిద్ధత మాతృక",
+      heroSub: "ధాన్య పరిస్థితులను ఖచ్చితంగా అంచనా వేసి, సంభావ్య ఆర్థిక నష్టాలను నివారించి పంటను భద్రపరచండి.",
+      readinessLabel: "ప్రత్యక్ష విశ్లేషణ ప్యానెల్",
       safe: "నిల్వకు సురక్షితం",
-      unsafe: "ఆరబెట్టడం కొనసాగించండి",
+      unsafe: "చర్య తీసుకోవలసి ఉంది",
       ghiLabel: "ధాన్య ఆరోగ్య సూచిక (GHI)",
       riskLabel: "లెక్కించబడిన నిల్వ ప్రమాదం",
       financialLabel: "సాధ్యమయ్యే ఆర్థిక నష్టం",
       weightLoss: "అంచనా వేసిన బరువు నష్టం:",
-      controlsLabel: "పర్యావరణ టెలిమెట్రీ సిమ్యులేషన్ నోడ్",
-      actionsLabel: "కార్యాచరణ సిఫార్సులు",
-      ledgerLabel: "చారిత్రక మూల్యాంకన లాగ్ స్ట్రీమ్",
-      downloadCta: "పూర్తి నివేదికను డౌన్‌లోడ్ చేయండి (PDF)",
+      controlsLabel: "పర్యావరణ టెలిమెట్రీ ఆకృతీకరణ",
+      actionsLabel: "కార్యాచరణ సంరక్షణ సూచనలు",
+      ledgerLabel: "చారిత్రక మూల్యాంకన రిజిస్టర్",
+      downloadCta: "పూర్తి వివేదిక పత్రం (PDF)",
       farmerMode: "రైతు మోడ్",
-      expertMode: "నిపుణుల మోడ్"
+      expertMode: "निపుణుల మోడ్"
     }
   };
 
   const UI = isTelugu ? lexicons.te : lexicons.en;
 
-  // Intercept changes and sync state with live API matrix
+  // Sync parameters with calculation engine or backend routing loop
   useEffect(() => {
-    async function triggerComputePass() {
+    async function performPipelineAnalysis() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v3/analyze`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v3/analyze`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -104,75 +107,80 @@ export default function ModeInspiredAnalyticsSuite() {
             moisture: moisture,
             temperature: temperature,
             humidity: humidity,
-            stored_mass_kg: mass
+            stored_mass_kg: mass * 1000 // Convert Metric Tons to KG for standard schema matching
           })
         });
-        if (res.ok) {
-          const data = await res.json();
+        if (response.ok) {
+          const res = await response.json();
           setAnalytics({
-            ghi: data.grain_health_index,
-            lossInr: data.estimated_financial_loss_inr,
-            lossKg: data.projected_weight_loss_kg,
-            riskLevel: data.fungal_risk_status,
-            advisories: data.action_advisory,
+            ghi: res.grain_health_index,
+            lossInr: res.estimated_financial_loss_inr,
+            lossKg: res.projected_weight_loss_kg,
+            riskLevel: res.fungal_risk_status,
+            advisories: res.action_advisory,
             violations: {
-              moisture: data.clp_matrix.clp_moisture_violation,
-              temp: data.clp_matrix.clp_temp_violation,
-              humidity: data.clp_matrix.clp_humidity_violation
+              moisture: res.clp_matrix.clp_moisture_violation,
+              temp: res.clp_matrix.clp_temp_violation,
+              humidity: res.clp_matrix.clp_humidity_violation
             }
           });
         }
       } catch (err) {
-        console.error("FastAPI backend network bypass failed:", err);
+        console.error("FastAPI backend live connection error:", err);
       }
     }
-    triggerComputePass();
+    performPipelineAnalysis();
   }, [cropType, moisture, temperature, humidity, mass]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 antialiased selection:bg-cyan-400 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-16">
       
-      {/* PROFESSIONAL LOGISTIC GLOBAL NAVBAR */}
-      <nav className="fixed top-0 left-0 w-full h-[72px] border-b border-white/5 bg-slate-950/80 backdrop-blur-md z-50">
-        <div className="saas-container h-full flex items-center justify-between">
+      {/* ADVANCED FIXED CHROMATIC NAVBAR */}
+      <nav className="fixed top-0 left-0 w-full h-16 md:h-[72px] border-b border-white/5 bg-slate-950/80 backdrop-blur-md z-50 neon-magic-drop">
+        <div className="mode-container h-full flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-sm font-black tracking-wider text-emerald-400">{UI.title}</span>
-            <span className="text-[10px] text-slate-400 font-medium tracking-tight hidden md:block">{UI.tagline}</span>
+            <h1 className="text-xs md:text-sm font-black tracking-widest text-emerald-400">{UI.title}</h1>
+            <p className="text-[9px] text-slate-400 tracking-tight hidden sm:block mt-0.5">{UI.tagline}</p>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4 md:gap-6">
             <button onClick={() => setIsTelugu(!isTelugu)} className="text-xs font-bold font-mono text-slate-400 hover:text-white transition">
               {isTelugu ? "ENGLISH" : "తెలుగు"}
             </button>
             <div className="h-4 w-[1px] bg-white/10" />
-            <div className="bg-slate-900 border border-white/10 p-0.5 rounded-lg flex items-center">
-              <button onClick={() => setIsExpertMode(false)} className={`text-[11px] font-bold px-3 py-1 rounded-md transition ${!isExpertMode ? 'bg-emerald-400 text-slate-950' : 'text-slate-400'}`}>
+            <div className="bg-slate-900 border border-white/10 p-0.5 rounded-xl flex items-center">
+              <button onClick={() => setIsExpertMode(false)} className={`text-[11px] font-bold px-3 py-1 rounded-lg transition ${!isExpertMode ? 'bg-emerald-400 text-slate-950 shadow-md' : 'text-slate-400'}`}>
                 {UI.farmerMode}
               </button>
-              <button onClick={() => setIsExpertMode(true)} className={`text-[11px] font-bold px-3 py-1 rounded-md transition ${isExpertMode ? 'bg-cyan-400 text-slate-950' : 'text-slate-400'}`}>
+              <button onClick={() => setIsExpertMode(true)} className={`text-[11px] font-bold px-3 py-1 rounded-lg transition ${isExpertMode ? 'bg-cyan-400 text-slate-950 shadow-md' : 'text-slate-400'}`}>
                 {UI.expertMode}
               </button>
             </div>
-            <a href="#matrix" className="hidden sm:inline-block bg-white text-slate-950 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-200 transition">
+            <a href="#pipeline" className="hidden md:inline-block bg-white text-slate-950 text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-100 transition shadow-lg">
               {UI.cta}
             </a>
           </div>
         </div>
       </nav>
 
-      {/* COMPACT ANALYTICAL HERO GRID */}
-      <div className="saas-container pt-[104px] pb-6">
-        <section className="grid lg:grid-cols-12 gap-6 items-center border-b border-white/5 pb-8">
-          <div className="lg:col-span-7 space-y-4">
-            <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-[1.05] whitespace-pre-line">
+      {/* 2-COLUMN DENSE HERO CONSOLE HEADER */}
+      <div className="mode-container pt-24 md:pt-[112px]">
+        <header className="grid lg:grid-cols-12 gap-8 items-center border-b border-white/5 pb-10">
+          <div className="lg:col-span-7 space-y-4 text-left">
+            {isExpertMode && (
+              <span className="inline-block text-[10px] font-bold font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-1 rounded-md">
+                ✓ EXPERT PARAMETER MATRIX ACTIVE (EMC, DEWPOINT)
+              </span>
+            )}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-[0.95] whitespace-pre-line">
               {UI.heroHead}
             </h1>
             <p className="text-slate-400 text-sm md:text-base max-w-xl leading-relaxed">
               {UI.heroSub}
             </p>
-            <div className="flex items-center gap-3 pt-1">
-              <a href="#matrix" className="bg-cyan-400 text-slate-950 text-xs font-bold px-5 py-3 rounded-lg hover:bg-cyan-300 transition">
-                {UI.cta}
+            <div className="flex items-center gap-3 pt-2">
+              <a href="#pipeline" className="bg-cyan-400 text-slate-950 text-xs font-bold px-5 py-3 rounded-lg hover:bg-cyan-300 transition font-mono tracking-wide shadow-lg">
+                Begin Smart Scan
               </a>
               <button className="bg-slate-900 border border-white/5 text-slate-300 text-xs font-bold px-5 py-3 rounded-lg hover:bg-slate-800 transition">
                 {UI.viewDemo}
@@ -180,124 +188,164 @@ export default function ModeInspiredAnalyticsSuite() {
             </div>
           </div>
 
-          {/* OVERVIEW PREVIEW MODULE DISPLAY CARD */}
+          {/* RIGHT VIEWPORT PREVIEW COMPONENT CARD */}
           <div className="lg:col-span-5">
-            <div className="saas-grid-card p-5 bg-slate-900/40 border border-white/10 relative overflow-hidden">
+            <div className="mode-card p-6 bg-slate-900/50 border border-white/10 relative overflow-hidden group">
+              <div className="absolute -top-12 -right-12 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition duration-500" />
               <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-4">
                 <div>
-                  <span className="saas-label text-[9px]">Live Context Tracker</span>
-                  <h3 className="text-xs font-bold text-white mt-0.5">{cropType} Data Configuration</h3>
+                  <span className="compact-label text-[9px] text-slate-400">Current Batch Health</span>
+                  <h3 className="text-sm font-bold text-white mt-0.5">Rabi Harvest 24</h3>
                 </div>
-                <span className="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold">ACTIVE</span>
+                <span className="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-bold tracking-widest">LIVE PREVIEW</span>
               </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="bg-slate-950/60 p-3 rounded-xl border border-white/5">
-                  <span className="saas-label text-[9px]">Index GHI</span>
-                  <p className="text-xl font-black text-emerald-400 mt-0.5">{analytics.ghi}</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-slate-950/60 p-4 rounded-xl border border-white/5">
+                  <span className="compact-label text-[9px]">Health GHI</span>
+                  <p className="text-3xl font-black text-emerald-400 mt-1">{analytics.ghi}</p>
                 </div>
-                <div className="bg-slate-950/60 p-3 rounded-xl border border-white/5">
-                  <span className="saas-label text-[9px]">Risk Profile</span>
-                  <p className="text-xl font-black text-cyan-400 mt-0.5">{analytics.riskLevel}</p>
+                <div className="bg-slate-950/60 p-4 rounded-xl border border-white/5">
+                  <span className="compact-label text-[9px]">Storage Risk</span>
+                  <p className={`text-xl font-black mt-2 ${analytics.riskLevel === 'HIGH' ? 'text-red-400' : 'text-yellow-400'}`}>
+                    {analytics.riskLevel}
+                  </p>
                 </div>
-                <div className="bg-slate-950/60 p-3 rounded-xl border border-white/5">
-                  <span className="saas-label text-[9px]">Directives</span>
-                  <p className="text-xl font-black text-yellow-400 mt-0.5">{analytics.advisories.length}</p>
+                <div className="bg-slate-950/60 p-4 rounded-xl border border-white/5 col-span-2">
+                  <span className="compact-label text-[9px]">Potential Financial Impact</span>
+                  <p className="text-2xl font-black text-red-400 mt-0.5">₹{analytics.lossInr.toLocaleString("en-IN")}</p>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </header>
       </div>
 
-      {/* METRICS DISPATCH COMPONENT ROW */}
-      <div className="saas-container py-3">
+      {/* METRICS QUAD GRID */}
+      <div className="mode-container py-4">
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="saas-grid-card p-5">
-            <span className="saas-label">{UI.ghiLabel}</span>
+          <div className="mode-card p-5 relative overflow-hidden">
+            <span className="compact-label">{UI.ghiLabel}</span>
             <div className="metric-heading text-emerald-400 mt-2 font-black text-4xl">{analytics.ghi}</div>
-            <p className="text-[11px] text-slate-500 mt-1">Live safe storage capacity evaluation</p>
+            <p className="text-[11px] text-slate-500 mt-1">Weighted storage envelope safety index</p>
           </div>
-          <div className="saas-grid-card p-5">
-            <span className="saas-label">{UI.riskLabel}</span>
-            <div className="metric-heading text-cyan-400 mt-2 font-black text-4xl">{analytics.riskLevel}</div>
-            <p className="text-[11px] text-slate-500 mt-1">Calculated biological deterioration rate</p>
+          <div className="mode-card p-5">
+            <span className="compact-label">{UI.riskLabel}</span>
+            <div className="metric-heading text-yellow-400 mt-2 font-black text-4xl">{analytics.riskLevel}</div>
+            <p className="text-[11px] text-slate-500 mt-1">Deterioration & spore hatching threshold</p>
           </div>
-          <div className="saas-grid-card p-5">
-            <span className="saas-label">{UI.financialLabel}</span>
+          <div className="mode-card p-5">
+            <span className="compact-label">{UI.financialLabel}</span>
             <div className="metric-heading text-red-400 mt-2 font-black text-4xl">₹{analytics.lossInr.toLocaleString("en-IN")}</div>
-            <p className="text-[11px] text-slate-500 mt-1">Projected revenue volume risk</p>
+            <p className="text-[11px] text-slate-500 mt-1">Estimated dry matter contraction value</p>
           </div>
-          <div className="saas-grid-card p-5">
-            <span className="saas-label">Active Warnings Triggers</span>
-            <div className="metric-heading text-yellow-400 mt-2 font-black text-4xl">{analytics.advisories.length}</div>
-            <p className="text-[11px] text-slate-500 mt-1">Prescriptive indicators registered</p>
+          <div className="mode-card p-5">
+            <span className="compact-label">Actionable Directives</span>
+            <div className="metric-heading text-cyan-400 mt-2 font-black text-4xl">{analytics.advisories.length}</div>
+            <p className="text-[11px] text-slate-500 mt-1">Prescriptive pipeline warnings loaded</p>
           </div>
         </section>
       </div>
 
-      {/* STORAGE ASSESSMENT INPUT AND MATRIX CONTROLS PANEL */}
-      <div id="matrix" className="saas-container analytics-section scroll-mt-20">
+      {/* CORE PIPELINE ASSESSMENT AREA (2-COLUMNS) */}
+      <div id="pipeline" className="mode-container mode-section-padding scroll-mt-20">
+        <h2 className="text-2xl font-black tracking-tight text-white text-center mb-8">Harvest Integrity Analytics</h2>
         <section className="grid lg:grid-cols-12 gap-6 items-stretch">
-          <div className="lg:col-span-7 flex">
-            <div className="saas-grid-card p-6 md:p-8 space-y-5 flex-1 flex flex-col justify-between">
-              <h3 className="text-sm font-bold text-white border-b border-white/5 pb-2">{UI.controlsLabel}</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="sm:col-span-2">
-                  <label className="saas-label text-[10px]">Active Commodity Target Profile</label>
-                  <select value={cropType} onChange={(e) => setCropType(e.target.value)} className="w-full mt-1 bg-slate-950 border border-white/10 rounded-xl p-3 text-xs text-white focus:border-cyan-400 outline-none transition">
-                    <option value="Paddy (Rice)">Paddy (Rice)</option>
-                    <option value="Wheat">Wheat</option>
-                    <option value="Maize">Maize</option>
-                  </select>
+          
+          {/* LEFT TELEMETRY INPUT CONTROLS SLIDERS BLOCK */}
+          <div className="lg:col-span-7 flex input-panel-wrapper">
+            <div className="mode-card p-6 md:p-8 space-y-6 flex-1 bg-slate-900/30 flex flex-col justify-between">
+              <h3 className="text-xs font-bold font-mono text-cyan-400 flex items-center gap-2 uppercase">
+                <span>📊</span> {UI.controlsLabel}
+              </h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="compact-label text-[10px]">Primary Crop Target Profile</label>
+                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
+                    {["Paddy (Rice)", "Wheat", "Maize (Corn)", "Sorghum (Jowar)", "Bengal Gram"].map((crop) => (
+                      <button 
+                        key={crop}
+                        onClick={() => setCropType(crop)}
+                        className={`p-2.5 rounded-xl border text-[10px] font-bold transition text-center ${
+                          cropType === crop ? 'bg-emerald-400/10 border-emerald-400 text-emerald-400' : 'bg-slate-950 border-white/5 text-slate-400'
+                        }`}
+                      >
+                        {crop}
+                      </button>
+                    ))}
+                  </div>
                 </div>
+
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Moisture Index</span><span className="font-mono text-emerald-400 font-bold">{moisture}%</span></div>
-                  <input type="range" min="5" max="35" step="0.1" value={moisture} onChange={(e) => setMoisture(parseFloat(e.target.value))} />
+                  <div className="flex justify-between text-xs font-medium">
+                    <span className="text-slate-400">Grain Moisture Balance</span>
+                    <span className="font-mono text-cyan-400 font-bold">{moisture}%</span>
+                  </div>
+                  <input type="range" min="8" max="25" step="0.1" value={moisture} onChange={(e) => setMoisture(parseFloat(e.target.value))} />
+                  <div className="flex justify-between text-[9px] text-slate-500 font-mono"><span>Min: 8%</span><span>Safe Threshold Limit: 13.5%</span></div>
                 </div>
+
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Core Temp Vector</span><span className="font-mono text-cyan-400 font-bold">{temperature}°C</span></div>
-                  <input type="range" min="10" max="65" step="0.5" value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))} />
+                  <div className="flex justify-between text-xs font-medium">
+                    <span className="text-slate-400">Core Silo Ambient Temperature</span>
+                    <span className="font-mono text-red-400 font-bold">{temperature}°C</span>
+                  </div>
+                  <input type="range" min="5" max="45" step="0.5" value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))} />
                 </div>
-                <div className="space-y-1.5 sm:col-span-2">
-                  <div className="flex justify-between text-xs"><span className="text-slate-400">Ambient Relative Humidity</span><span className="font-mono text-yellow-400 font-bold">{humidity}%</span></div>
+
+                <div className="space-y-1.5">
+                  <div className="flex justify-between text-xs font-medium">
+                    <span className="text-slate-400">Relative Internal Air Humidity</span>
+                    <span className="font-mono text-yellow-400 font-bold">{humidity}%</span>
+                  </div>
                   <input type="range" min="20" max="95" step="1" value={humidity} onChange={(e) => setHumidity(parseFloat(e.target.value))} />
                 </div>
+
                 {isExpertMode && (
-                  <div className="space-y-1.5 sm:col-span-2 pt-2 border-t border-white/5 animate-fade-in">
-                    <div className="flex justify-between text-xs"><span className="text-slate-400">Total Bulk Volumetric Mass</span><span className="font-mono text-slate-300 font-bold">{mass.toLocaleString()} kg</span></div>
-                    <input type="range" min="1000" max="50000" step="500" value={mass} onChange={(e) => setMass(parseInt(e.target.value))} />
+                  <div className="space-y-1.5 pt-3 border-t border-white/5 animate-fade-in">
+                    <div className="flex justify-between text-xs"><span className="text-slate-400">Batch Mass Volumetric Scale</span><span className="font-mono text-slate-300 font-bold">{mass} Metric Tons</span></div>
+                    <input type="range" min="1" max="250" step="1" value={mass} onChange={(e) => setMass(parseInt(e.target.value))} />
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          {/* REALTIME CALCULATION EVALUATOR MODULE ROW */}
-          <div className="lg:col-span-5 flex">
-            <div className="saas-grid-card p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6 bg-slate-900/40">
+          {/* RIGHT SIDE: REALTIME ENGINE PIPELINE RESPONSES */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
+            <div className="mode-card p-6 md:p-8 flex-1 flex flex-col justify-between space-y-6 bg-slate-900/80 border-cyan-500/10">
               <div>
-                <span className="saas-label">{UI.readinessLabel}</span>
-                <h2 className={`text-3xl font-black mt-3 tracking-tight ${analytics.ghi > 85 ? 'text-emerald-400' : 'text-red-400'}`}>
-                  {analytics.ghi > 85 ? UI.safe : UI.unsafe}
+                <span className="compact-label text-slate-400">{UI.readinessLabel}</span>
+                <h2 className={`text-2xl md:text-3xl font-black mt-2 tracking-tight uppercase ${analytics.ghi > 80 ? 'text-emerald-400' : 'text-red-400'}`}>
+                  {analytics.ghi > 80 ? UI.safe : UI.unsafe}
                 </h2>
               </div>
-              <div className="space-y-2 border-t border-white/5 pt-4 text-xs">
-                <div className="flex justify-between py-1.5 border-b border-white/5">
-                  <span className="text-slate-400">{UI.ghiLabel}</span>
-                  <span className="font-mono font-bold text-emerald-400">{analytics.ghi} / 100</span>
+
+              {/* LIVE STRUCTURAL DATA REEVAL MATRIX */}
+              <div className="space-y-2 border-t border-white/5 pt-4 text-xs font-medium font-mono">
+                <div className="flex justify-between py-2 border-b border-white/5">
+                  <span className="text-slate-500">{UI.ghiLabel}</span>
+                  <span className="text-emerald-400 font-bold">{analytics.ghi} / 100</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-white/5">
-                  <span className="text-slate-400">{UI.riskLabel}</span>
-                  <span className="font-mono font-bold text-cyan-400">{analytics.riskLevel} LEVEL</span>
+                <div className="flex justify-between py-2 border-b border-white/5">
+                  <span className="text-slate-500">{UI.riskLabel}</span>
+                  <span className="text-yellow-400 font-bold">{analytics.riskLevel} TIER</span>
                 </div>
-                <div className="flex justify-between py-1.5 border-b border-white/5">
-                  <span className="text-slate-400">Financial Exposure Value</span>
-                  <span className="font-mono font-bold text-red-400">₹{analytics.lossInr.toLocaleString("en-IN")}</span>
+                <div className="flex justify-between py-2">
+                  <span className="text-slate-500">Financial Exposure Value</span>
+                  <span className="text-red-400 font-bold">₹{analytics.lossInr.toLocaleString("en-IN")}</span>
                 </div>
+                
                 {isExpertMode && (
-                  <div className="flex justify-between py-1.5 font-mono text-slate-500 animate-fade-in">
-                    <span>{UI.weightLoss}</span>
-                    <span className="text-slate-300 font-bold">{analytics.lossKg} kg</span>
+                  <div className="pt-2 border-t border-white/5 text-[11px] text-slate-400 grid grid-cols-2 gap-2 font-sans animate-fade-in">
+                    <div className="bg-slate-950 p-2 rounded-lg border border-white/5">
+                      <span className="text-[9px] text-slate-500 block uppercase font-mono">EMC Balance</span>
+                      <span className="text-cyan-400 font-bold">11.2% Ratio</span>
+                    </div>
+                    <div className="bg-slate-950 p-2 rounded-lg border border-white/5">
+                      <span className="text-[9px] text-slate-500 block uppercase font-mono">Dew Point</span>
+                      <span className="text-red-400 font-bold">22.4°C Limit</span>
+                    </div>
                   </div>
                 )}
               </div>
@@ -306,84 +354,81 @@ export default function ModeInspiredAnalyticsSuite() {
         </section>
       </div>
 
-      {/* PRESCRIPTIVE DIRECTIVES LOGGER */}
-      <div className="saas-container py-3">
+      {/* ACTIONABLE ADVISORIES PRESCRIPTIVE LIST */}
+      <div className="mode-container py-2">
         <section className="space-y-4">
-          <span className="saas-label">{UI.actionsLabel}</span>
+          <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+            <span>🎗️</span> {UI.actionsLabel}
+          </h3>
           <div className="grid sm:grid-cols-2 gap-4">
-            {analytics.advisories.length > 0 ? (
-              analytics.advisories.map((advice, idx) => (
-                <div key={idx} className="saas-grid-card p-4 border-l-2 border-l-cyan-400 bg-slate-900/40">
-                  <h4 className="font-bold text-xs text-slate-200 tracking-wide">{advice.split(":")[0] || "Operational Trigger"}</h4>
-                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{advice.split(":")[1] || advice}</p>
-                </div>
-              ))
-            ) : (
-              <div className="saas-grid-card p-4 col-span-2 text-center text-xs text-slate-400 font-mono">
-                🟢 Environmental balance vectors safe. System parameters secure.
+            {analytics.advisories.map((item, index) => (
+              <div key={index} className="mode-card p-5 border-l-2 border-emerald-400 bg-slate-900/20 flex flex-col justify-between">
+                <h4 className="font-bold text-xs text-slate-200 tracking-wide">{item.split(":")[0]}</h4>
+                <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">{item.split(":")[1] || item}</p>
               </div>
-            )}
+            ))}
           </div>
         </section>
       </div>
 
-      {/* STATIC STATUS RANGE SPLITTER BARS */}
-      <div className="saas-container py-3">
+      {/* SPECIFIC RELEVANT RISKS CHECKLIST BAR CONTROLS */}
+      <div className="mode-container py-6">
         <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <div className="saas-grid-card p-4 text-center bg-slate-950/40">
-            <span className="text-[10px] font-mono text-slate-500 uppercase">Moisture Node</span>
-            <p className={`text-xs font-bold mt-1.5 ${analytics.violations.moisture ? 'text-red-400' : 'text-emerald-400'}`}>
-              {analytics.violations.moisture ? "⚠️ CEILING SPIKE" : "✓ COMPLIANT"}
+          <div className="mode-card p-4 text-center bg-slate-900/10">
+            <span className="text-[10px] font-mono text-slate-500 uppercase">Moisture Content</span>
+            <p className={`text-xs font-bold mt-1 ${analytics.violations.moisture ? 'text-red-400' : 'text-emerald-400'}`}>
+              {analytics.violations.moisture ? "⚠️ CEILING OVERLIMIT" : "✓ NORMAL BOUNDS"}
             </p>
           </div>
-          <div className="saas-grid-card p-4 text-center bg-slate-950/40">
-            <span className="text-[10px] font-mono text-slate-500 uppercase">Thermal Node</span>
-            <p className={`text-xs font-bold mt-1.5 ${analytics.violations.temp ? 'text-red-400' : 'text-emerald-400'}`}>
-              {analytics.violations.temp ? "⚠️ HEAT HOTSPOT" : "✓ COMPLIANT"}
+          <div className="mode-card p-4 text-center bg-slate-900/10">
+            <span className="text-[10px] font-mono text-slate-500 uppercase">Thermal Hotspot</span>
+            <p className={`text-xs font-bold mt-1 ${analytics.violations.temp ? 'text-red-400' : 'text-emerald-400'}`}>
+              {analytics.violations.temp ? "⚠️ WARNING TIER" : "✓ COMPLIANT VECT"}
             </p>
           </div>
-          <div className="saas-grid-card p-4 text-center bg-slate-950/40">
-            <span className="text-[10px] font-mono text-slate-500 uppercase">Humidity Vector</span>
-            <p className={`text-xs font-bold mt-1.5 ${analytics.violations.humidity ? 'text-yellow-400' : 'text-emerald-400'}`}>
-              {analytics.violations.humidity ? "⚠️ LEVEL CEILING" : "✓ COMPLIANT"}
+          <div className="mode-card p-4 text-center bg-slate-900/10">
+            <span className="text-[10px] font-mono text-slate-500 uppercase">Relative Air Humidity</span>
+            <p className={`text-xs font-bold mt-1 ${analytics.violations.humidity ? 'text-yellow-400' : 'text-emerald-400'}`}>
+              {analytics.violations.humidity ? "⚠️ CONDENSATION RISK" : "✓ COMPLIANT"}
             </p>
           </div>
-          <div className="saas-grid-card p-4 text-center bg-slate-950/40">
-            <span className="text-[10px] font-mono text-slate-500 uppercase">Microbial Core</span>
-            <p className={`text-xs font-bold mt-1.5 ${analytics.riskLevel === 'HIGH' ? 'text-red-400' : 'text-emerald-400'}`}>
-              {analytics.riskLevel === 'HIGH' ? "⚠️ PROLIFERATION" : "✓ NOMINAL TIER"}
+          <div className="mode-card p-4 text-center bg-slate-900/10">
+            <span className="text-[10px] font-mono text-slate-500 uppercase">Fungal Activity</span>
+            <p className={`text-xs font-bold mt-1 ${analytics.riskLevel === 'HIGH' ? 'text-red-400' : 'text-emerald-400'}`}>
+              {analytics.riskLevel === 'HIGH' ? "⚠️ PROLIFERATION" : "✓ DORMANT"}
             </p>
           </div>
         </section>
       </div>
 
-      {/* HISTORICAL RECENT ASSESSMENT LOG STREAM */}
-      <div className="saas-container py-4">
+      {/* HISTORICAL TIMELINE STREAM RECORD matrix */}
+      <div className="mode-container py-4">
         <section className="space-y-4">
-          <div className="text-left"><span className="saas-label">{UI.ledgerLabel}</span></div>
+          <span className="saas-label">{UI.ledgerLabel}</span>
           <div className="grid sm:grid-cols-2 gap-4">
-            <div className="saas-grid-card p-4 bg-slate-900/20">
-              <span className="text-[10px] font-bold font-mono text-cyan-400">June 21</span>
-              <h4 className="font-bold text-xs text-slate-300 mt-1">Silo Operational Assessment Evaluated</h4>
-              <p className="text-[11px] text-slate-500 mt-1 leading-normal">Volumetric limits dynamically processed via system reference matrices.</p>
+            <div className="mode-card p-4 border border-white/5 bg-slate-950/40">
+              <span className="text-[10px] font-mono text-cyan-400 font-bold block">June 21 — Telemetry Completed</span>
+              <p className="text-xs font-medium text-slate-300 mt-1">Batch parameter log matrix compiled safely for lot verification.</p>
             </div>
-            <div className="saas-grid-card p-4 bg-slate-900/20">
-              <span className="text-[10px] font-bold font-mono text-slate-500">June 10</span>
-              <h4 className="font-bold text-xs text-slate-400 mt-1">Aeration De-Humidification Loop Logged</h4>
-              <p className="text-[11px] text-slate-500 mt-1 leading-normal">Manual ventilation balance sequence executed across core baseline registers.</p>
+            <div className="mode-card p-4 border border-white/5 bg-slate-950/40">
+              <span className="text-[10px] font-mono text-slate-500 font-bold block">June 10 — Forced Aeration Cycle</span>
+              <p className="text-xs font-medium text-slate-500 mt-1">Silo baseline dynamic drying parameter checklist saved local node storage.</p>
             </div>
           </div>
         </section>
       </div>
 
-      {/* COMPILER GENERATION CONTROLS ROW */}
-      <div className="saas-container py-6">
-        <section className="saas-grid-card p-5 bg-slate-900/40 text-center flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10">
+      {/* REPORT COMPILER CARD SECTION */}
+      <div className="mode-container py-6">
+        <section className="mode-card p-6 bg-slate-900/50 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-left">
-            <h4 className="font-bold text-xs text-slate-200 tracking-wide">Structured Diagnostic Ledger Compiler</h4>
-            <p className="text-[11px] text-slate-500 mt-0.5">Generates certified technical report matrices across matching verification limits.</p>
+            <h4 className="font-bold text-xs text-slate-200 tracking-wide">Quality Certificate & Report Generator</h4>
+            <p className="text-[11px] text-slate-500 mt-1">Generates an authorized digital telemetry analysis sheet for processing limits records.</p>
           </div>
-          <button className="w-full sm:w-auto bg-white text-slate-950 font-bold text-xs font-mono tracking-wider px-5 py-2.5 rounded-lg hover:bg-slate-200 transition uppercase">
+          <button 
+            onClick={() => window.print()}
+            className="w-full sm:w-auto bg-white text-slate-950 font-bold text-xs font-mono tracking-wider px-6 py-3 rounded-xl hover:bg-slate-200 transition-all uppercase shadow-lg shadow-white/5"
+          >
             {UI.downloadCta}
           </button>
         </section>
