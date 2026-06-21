@@ -2,23 +2,21 @@
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/components/**/*.{js,ts,jsx,tsx,mdx}", // Explicitly map your app/components subfolder
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
         slate: {
-          950: '#020617', // Deep Obsidian Base
-          900: '#0c121e', // Medium Glassmorphic Charcoal
-          850: '#111a2e', // Elevated Card Borders
+          950: '#020617', // Deep Obsidian Space Navy
+          900: '#0b1329', // Glassmorphism Base
+          850: '#111c35', // Deep Accent Navy
         },
         emerald: {
-          400: '#00FF9D', // Premium Neon Green (Nominal Storage status)
+          400: '#00FF9D', // Neon Green (Nominal Baseline)
         },
         cyan: {
-          400: '#00D9FF', // Premium Neon Cyan (Caution/Telemetry Status)
+          400: '#00D9FF', // Neon Cyan (Telemetry Warning)
         }
       },
       fontFamily: {
@@ -26,13 +24,17 @@ module.exports = {
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
       },
       animation: {
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'fade-in': 'fadeIn 0.5s ease-out forwards',
+        'pulse-glow': 'pulseGlow 2s infinite ease-in-out',
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.6', filter: 'drop-shadow(0 0 5px rgba(0,255,157,0.4))' },
+          '50%': { opacity: '1', filter: 'drop-shadow(0 0 15px rgba(0,255,157,0.8))' },
         }
       }
     },
