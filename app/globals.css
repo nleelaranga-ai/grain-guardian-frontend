@@ -1,24 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  /* Premium Dark Theme Core Variables */
   --color-slate-950: #020617;
   --color-slate-900: #0c121e;
   --color-slate-850: #111a2e;
-  
   --color-emerald-400: #00FF9D;
   --color-cyan-400: #00D9FF;
 
-  /* Typography Configurations */
   --font-sans: "Inter", "system-ui", sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
-  /* Premium Micro-interactions */
-  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-fade-in: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(12px); }
+    0% { opacity: 0; transform: translateY(8px); }
     100% { opacity: 1; transform: translateY(0); }
   }
 }
@@ -31,19 +26,10 @@
   }
 }
 
-/* Glassmorphism System Utility */
+/* Glassmorphism System Panels */
 .glass-panel {
-  background: rgba(11, 19, 41, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(12, 18, 30, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Clean UI Overrides */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
