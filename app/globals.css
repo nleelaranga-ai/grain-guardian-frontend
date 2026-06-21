@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  /* Google AI Studio Inspired Color Palette */
-  --color-slate-950: #020617; /* Deep workspace vacuum background */
-  --color-surface-primary: rgba(15, 23, 42, 0.72); /* Main container layout background */
-  --color-surface-secondary: rgba(15, 23, 42, 0.55); /* Nested analytics panels background */
-  --color-studio-border: rgba(255, 255, 255, 0.06); /* Thin crisp component separators */
+  /* Google AI Studio & Mode.com Premium Enterprise Color Palette */
+  --color-slate-950: #020617; /* Base obsidian black workspace background */
+  --color-surface-primary: rgba(15, 23, 42, 0.72); /* Primary frosted glass panel background */
+  --color-surface-secondary: rgba(15, 23, 42, 0.55); /* Nested telemetry component card background */
+  --color-studio-border: rgba(255, 255, 255, 0.06); /* Thin crisp micro-separators */
   
-  --color-safe-green: #00FF9D; /* Nominal tier / Compliant state */
-  --color-accent-cyan: #00D9FF; /* Telemetry charts & focus nodes */
-  --color-warning-yellow: #FACC15; /* Mid-tier caution boundary */
-  --color-critical-red: #FF5A5F; /* High-risk asset deterioration */
+  --color-safe-green: #00FF9D; /* Primary accent: Nominal/Compliant conditions */
+  --color-accent-cyan: #00D9FF; /* Secondary accent: Active charting metrics & knobs */
+  --color-warning-yellow: #FACC15; /* Warning tier boundary flag */
+  --color-critical-red: #FF5A5F; /* Critical threat / Post-harvest deterioration alert */
   
   --color-text-primary: #F8FAFC;
   --color-text-secondary: #94A3B8;
 
-  /* Studio Motion Curves */
-  --animate-studio-fade: studioFade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Premium Micro-Interactions System */
+  --animate-studio-fade: studioFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
   @keyframes studioFade {
-    0% { opacity: 0; transform: translateY(6px); filter: blur(4px); }
+    0% { opacity: 0; transform: translateY(8px); filter: blur(4px); }
     100% { opacity: 1; transform: translateY(0); filter: blur(0); }
   }
 }
@@ -28,13 +28,13 @@
   body {
     background-color: var(--color-slate-950);
     color: var(--color-text-primary);
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-family: "Outfit", "Inter", -apple-system, sans-serif;
     overflow-x: hidden;
     letter-spacing: -0.01em;
   }
 }
 
-/* Studio high-density workspace responsive alignment wrappers */
+/* 70% Content / 30% Space High Density Layout Constraints */
 .studio-container {
   max-width: 1440px;
   margin-left: auto;
@@ -44,70 +44,66 @@
 }
 
 .studio-section {
-  padding-top: clamp(48px, 5vw, 96px);
-  padding-bottom: clamp(48px, 5vw, 96px);
+  padding-top: clamp(64px, 6vw, 112px);
+  padding-bottom: clamp(64px, 6vw, 112px);
   border-bottom: 1px solid var(--color-studio-border);
 }
 
-/* Glassmorphic Panel Systems */
+/* Glassmorphism System Cards */
 .studio-panel {
   background: var(--color-surface-primary);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--color-studio-border);
-  border-radius: 12px; /* Crisp developer tool corner radius */
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 16px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .studio-panel:hover {
-  border-color: rgba(0, 217, 255, 0.2);
-  box-shadow: 0 12px 24px -10px rgba(2, 6, 23, 0.8);
+  border-color: rgba(0, 217, 255, 0.25);
+  box-shadow: 0 20px 40px -15px rgba(2, 6, 23, 0.9);
+  transform: translateY(-2px);
 }
 
 .studio-label {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   color: var(--color-text-secondary);
 }
 
-/* Unified Custom Workspace Range Sliders */
+/* Custom Interactive Developer-Console Sliders */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
   height: 4px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
+  border-radius: 999px;
   outline: none;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #00D9FF;
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
   transition: transform 0.1s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.25);
+  transform: scale(1.3);
 }
 
-/* Precise double-column print layout override for biological verification certificate exports */
+/* Professional Telemetry Quality Report Print Overrides */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  nav, .studio-control-inputs, button, input, select {
-    display: none !important;
-  }
+  body { background: #ffffff !important; color: #000000 !important; }
+  nav, .studio-inputs, button, input, select { display: none !important; }
   .studio-panel {
     background: transparent !important;
     border: 1px solid #000000 !important;
