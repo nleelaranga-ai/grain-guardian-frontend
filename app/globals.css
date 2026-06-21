@@ -1,42 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
 body {
-  background-color: #020617;
+  background: #020617;
   color: #f8fafc;
+  font-family:
+    Inter,
+    system-ui,
+    sans-serif;
   overflow-x: hidden;
 }
 
-/* Custom Glassmorphism Utility */
-.glass-panel {
-  background: rgba(11, 19, 41, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+body {
+  min-height: 100vh;
 }
 
-/* Hide scrollbars but preserve functionality */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.glass-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-@media print {
-  body {
-    background: white;
-    color: black;
-  }
-  .printable-card {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    width: 100% !important;
-  }
-  aside, header, button, input, select {
-    display: none !important;
-  }
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 157, 0.25);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    to right,
+    #00ff9d,
+    #00d9ff
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 999px;
 }
