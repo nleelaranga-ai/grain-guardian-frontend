@@ -1,54 +1,45 @@
 "use client";
 
-import Sidebar from "./Sidebar";
+import Navbar from "./Navbar";
 import Hero from "./Hero";
-import MetricCards from "./MetricCards";
-import SimulatorPanel from "./SimulatorPanel";
-import AdvisoryPanel from "./AdvisoryPanel";
-import CLPGrid from "./CLPGrid";
-import HistoryTable from "./HistoryTable";
-import ReportPanel from "./ReportPanel";
-
-import { useTelemetry } from "../hooks/useTelemetry";
-import { useAnalysis } from "../hooks/useAnalysis";
+import KPICards from "./KPICards";
+import AnalyticsSection from "./AnalyticsSection";
+import TelemetryGauges from "./TelemetryGauges";
+import RecommendationPanel from "./RecommendationPanel";
+import CLPMatrix from "./CLPMatrix";
+import LedgerTimeline from "./LedgerTimeline";
+import ReportCenter from "./ReportCenter";
+import Footer from "./Footer";
 
 export default function Home() {
-  const telemetry = useTelemetry();
-
-  const analysis = useAnalysis({
-    moisture: telemetry.moisture,
-    temperature: telemetry.tempT3,
-    humidity: telemetry.humidity,
-    cropIndex: telemetry.cropIndex,
-    massKg: telemetry.massKg,
-    storageDays: telemetry.storageDays,
-  });
-
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex">
-      <Sidebar />
+    <div className="min-h-screen bg-slate-950 text-white">
 
-      <main className="flex-1 p-8 space-y-8 overflow-auto">
+      <Navbar />
+
+      <main className="max-w-7xl mx-auto px-6 py-10 space-y-10">
+
         <Hero />
 
-        <MetricCards analysis={analysis} />
+        <KPICards />
 
-        <div className="grid lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-5">
-            <SimulatorPanel telemetry={telemetry} />
-          </div>
+        <AnalyticsSection />
 
-          <div className="lg:col-span-7">
-            <AdvisoryPanel analysis={analysis} />
-          </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          <TelemetryGauges />
+          <RecommendationPanel />
         </div>
 
-        <CLPGrid analysis={analysis} />
+        <CLPMatrix />
 
-        <HistoryTable />
+        <LedgerTimeline />
 
-        <ReportPanel analysis={analysis} />
+        <ReportCenter />
+
       </main>
+
+      <Footer />
+
     </div>
   );
 }
