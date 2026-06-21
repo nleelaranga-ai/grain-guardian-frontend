@@ -2,39 +2,59 @@
 
 import React, { useState, useEffect } from "react";
 
-export default function Page() {
-  // Input states for telemetry simulation
+export default function GrainGuardianSuite() {
+  // Application Control Planes
+  const [isExpertMode, setIsExpertMode] = useState(false);
+  const [isTelugu, setIsTelugu] = useState(false);
+
+  // Core Simulation States
   const [cropType, setCropType] = useState("Paddy (Rice)");
   const [moisture, setMoisture] = useState(14.0);
   const [temperature, setTemperature] = useState(34.0);
   const [humidity, setHumidity] = useState(65.0);
-  const [mass, setMass] = useState(12000.0);
-  const [isLanguageTelugu, setIsLanguageTelugu] = useState(false);
+  const [mass, setMass] = useState(12000);
 
-  // Live analytics response state
+  // Decision Pipeline Analytics State
   const [analytics, setAnalytics] = useState({
     ghi: 92,
     lossInr: 12540,
+    lossKg: 240,
     fungalRisk: "LOW",
-    clpMatrix: {
-      moisture: false,
-      temp: false,
-      humidity: false,
-      duration: false,
-      fungal: false,
-    },
-    advisories: ["All structural parameters are safe. Maintain hermetic storage conditions."],
+    clp: { moisture: false, temp: false, humidity: false, duration: false, fungal: false },
+    advisories: []
   });
 
-  const [loading, setLoading] = useState(false);
+  // Translation Dictionaries (Strict Translation, No Transliteration)
+  const text = {
+    en: {
+      title: "GRAIN GUARDIAN",
+      ghi: "Grain Health Index",
+      clp: "Critical Loss Point Matrix",
+      loss: "Economic Loss Prediction",
+      farmerMode: "Farmer Mode",
+      expertMode: "Expert Mode",
+      heroHead: "Know When To Store. Know When To Act.",
+      heroSub: "An intelligent post-harvest decision support system powered by Grain Health Index calculations, Critical Loss Point Detection, and Recommendation Intelligence."
+    },
+    te: {
+      title: "ధాన్య సంరక్షకుడు",
+      ghi: "ధాన్య ఆరోగ్య సూచిక",
+      clp: "కీలక నష్ట నివారణ మాత్రిక",
+      loss: "ఆర్థిక నష్ట అంచనా",
+      farmerMode: "రైతు మోడ్",
+      expertMode: "నిపుణుల మోడ్",
+      heroHead: "ఎప్పుడు నిల్వ చేయాలో తెలుసుకోండి. ఎప్పుడు చర్య తీసుకోవాలో తెలుసుకోండి.",
+      heroSub: "ధాన్య ఆరోగ్య సూచిక గణనలు, కీలక నష్ట నివారణ గుర్తింపు మరియు సిఫార్సు ఇంటెలిజెన్స్ ద్వారా ఆధారితమైన ఒక తెలివైన పంట అనంతర నిర్ణయ మద్దతు వ్యవస్థ."
+    }
+  };
 
-  // Fetch from FastAPI backend when state changes
+  const activeLang = isTelugu ? text.te : text.en;
+
+  // Real-time API Bridge to FastAPI calculations Engine
   useEffect(() => {
-    async function triggerAnalysisPass() {
-      setLoading(true);
+    async function executeEnginePass() {
       try {
-        const backendUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
-        const response = await fetch(`${backendUrl}/api/v3/analyze`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v3/analyze`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -42,238 +62,176 @@ export default function Page() {
             moisture: moisture,
             temperature: temperature,
             humidity: humidity,
-            stored_mass_kg: mass,
-          }),
+            stored_mass_kg: mass
+          })
         });
-
         if (response.ok) {
           const res = await response.json();
           setAnalytics({
             ghi: res.grain_health_index,
             lossInr: res.estimated_financial_loss_inr,
+            lossKg: res.projected_weight_loss_kg,
             fungalRisk: res.fungal_risk_status,
-            clpMatrix: {
+            clp: {
               moisture: res.clp_matrix.clp_moisture_violation,
               temp: res.clp_matrix.clp_temp_violation,
               humidity: res.clp_matrix.clp_humidity_violation,
               duration: res.clp_matrix.clp_duration_violation,
-              fungal: res.clp_matrix.clp_fungal_violation,
+              fungal: res.clp_matrix.clp_fungal_violation
             },
-            advisories: res.action_advisory,
+            advisories: res.action_advisory
           });
         }
       } catch (err) {
-        console.error("Backend unreachable, fallback to client calculation:", err);
-      } finally {
-        setLoading(false);
+        console.error("FastAPI calculation bypass error", err);
       }
     }
-
-    const delayDebounce = setTimeout(() => {
-      triggerAnalysisPass();
-    }, 250);
-
-    return () => clearTimeout(delayDebounce);
+    executeEnginePass();
   }, [cropType, moisture, temperature, humidity, mass]);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans">
+    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-emerald-400 selection:text-slate-950">
       
-      {/* NAVBAR */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-black text-emerald-400 tracking-tight">GRAIN GUARDIAN</h1>
-            <p className="text-xs text-slate-400">IEEE Decision Intelligence Engine v3</p>
-          </div>
-
-          <div className="flex gap-3">
-            <button 
-              onClick={() => setIsLanguageTelugu(!isLanguageTelugu)} 
-              className="px-4 py-2 rounded-xl bg-slate-900 border border-white/5 font-semibold text-sm hover:bg-slate-800 transition"
-            >
-              🌐 {isLanguageTelugu ? "English" : "Telugu"}
+      {/* HEADER NAVBAR */}
+      <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/70 backdrop-blur-xl h-20 px-8 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl font-black text-emerald-400 tracking-wider">{activeLang.title}</h1>
+          <span className="text-xs font-mono text-slate-500 bg-slate-900 border border-white/5 px-2 py-0.5 rounded-md">V3.0</span>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          {/* Language Toggle */}
+          <button onClick={() => setIsTelugu(!isTelugu)} className="text-xs font-bold font-mono px-3 py-2 rounded-xl bg-slate-900 border border-white/5 hover:bg-slate-800 transition">
+            🌐 {isTelugu ? "ENGLISH" : "తెలుగు"}
+          </button>
+          
+          {/* Mode Switch Plane */}
+          <div className="bg-slate-900 p-1 rounded-xl border border-white/5 flex gap-1">
+            <button onClick={() => setIsExpertMode(false)} className={`text-xs font-bold px-3 py-1.5 rounded-lg transition ${!isExpertMode ? 'bg-emerald-400 text-slate-950' : 'text-slate-400'}`}>
+              {activeLang.farmerMode}
             </button>
-
-            <div className={`px-4 py-2 rounded-xl font-bold text-sm flex items-center gap-2 ${
-              analytics.ghi > 80 ? "bg-emerald-500/10 text-emerald-400" : analytics.ghi > 50 ? "bg-yellow-500/10 text-yellow-400" : "bg-red-500/10 text-red-400"
-            }`}>
-              <span className="animate-pulse">●</span> {analytics.ghi > 80 ? "SAFE" : analytics.ghi > 50 ? "WARNING" : "CRITICAL"}
-            </div>
+            <button onClick={() => setIsExpertMode(true)} className={`text-xs font-bold px-3 py-1.5 rounded-lg transition ${isExpertMode ? 'bg-cyan-400 text-slate-950' : 'text-slate-400'}`}>
+              {activeLang.expertMode}
+            </button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-12 space-y-10 animate-fade-in">
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-16">
         
-        {/* HERO */}
-        <section className="text-center space-y-4">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-bold text-xs tracking-wider uppercase">
-            {isLanguageTelugu ? "ప్రీమియం ధాన్య నిర్ధారణ" : "PREMIUM GRAIN DIAGNOSTICS"}
+        {/* SECTION 1: HERO CONTAINER */}
+        <section className="text-center max-w-4xl mx-auto space-y-6">
+          <span className="text-xs font-bold text-emerald-400 tracking-widest bg-emerald-500/10 border border-emerald-500/20 px-4 py-1.5 rounded-full uppercase">
+            {isTelugu ? "పరిశోధన ఆధారిత నిర్ణయ వేదిక" : "Research-Driven Innovation Platform"}
           </span>
-          <h1 className="text-5xl lg:text-6xl font-black tracking-tight leading-none">
-            {isLanguageTelugu ? "స్పష్టత కోసం నిర్మించబడింది." : "Built for clarity."}
-            <br />
-            <span className="text-slate-400">{isLanguageTelugu ? "చర్య కోసం రూపొందించబడింది." : "Designed for action."}</span>
+          <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-white leading-none">
+            {activeLang.heroHead}
           </h1>
+          <p className="text-slate-400 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
+            {activeLang.heroSub}
+          </p>
         </section>
 
-        {/* KPI CARDS */}
+        {/* SECTION 2: IEEE & RESEARCH CREDIBILITY SUITE */}
+        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-white/5 py-8 text-center bg-slate-900/20 rounded-3xl px-4">
+          <div><h4 className="text-2xl font-black text-white">1,269+</h4><p className="text-xs text-slate-500 mt-1">Papers Reviewed</p></div>
+          <div><h4 className="text-2xl font-black text-white">20,412+</h4><p className="text-xs text-slate-500 mt-1">Patents Analyzed</p></div>
+          <div><h4 className="text-2xl font-black text-white">FAO</h4><p className="text-xs text-slate-500 mt-1">Guidelines Referenced</p></div>
+          <div><h4 className="text-2xl font-black text-white">Govt</h4><p className="text-xs text-slate-500 mt-1">Storage Standards Match</p></div>
+        </section>
+
+        {/* SECTION 4 & 6: CORE PERFORMANCE METRICS */}
         <section className="grid md:grid-cols-3 gap-6">
-          <div className="glass-panel rounded-3xl p-8 relative overflow-hidden">
-            <p className="text-slate-400 text-xs font-bold tracking-widest">GRAIN HEALTH INDEX</p>
-            <h2 className="text-6xl font-black text-emerald-400 mt-4 tracking-tight">{analytics.ghi}</h2>
-            <p className="text-slate-500 text-sm mt-1">/ 100 max capacity score</p>
+          {/* GHI Showcase */}
+          <div className="glass-panel p-8">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">{activeLang.ghi}</h3>
+            <div className="mt-6 flex items-baseline gap-2">
+              <span className="text-6xl font-black text-emerald-400 tracking-tight">{analytics.ghi}</span>
+              <span className="text-slate-500 font-mono text-sm">/100</span>
+            </div>
+            <div className="mt-4"><span className={`text-xs font-bold px-2.5 py-1 rounded-md ${analytics.ghi > 85 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+              {analytics.ghi > 85 ? "EXCELLENT" : "CRITICAL WARNING"}
+            </span></div>
           </div>
 
-          <div className="glass-panel rounded-3xl p-8 relative overflow-hidden">
-            <p className="text-slate-400 text-xs font-bold tracking-widest">ESTIMATED FINANCIAL LOSS</p>
-            <h2 className={`text-5xl font-black mt-4 tracking-tight ${analytics.lossInr > 0 ? 'text-red-400' : 'text-slate-300'}`}>
-              ₹{analytics.lossInr.toLocaleString("en-IN")}
-            </h2>
-            <p className="text-slate-500 text-sm mt-1">Shrinkage & valuation penalty</p>
+          {/* Economic Loss Intelligence */}
+          <div className="glass-panel p-8">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">{activeLang.loss}</h3>
+            <div className="mt-6">
+              <span className="text-5xl font-black text-red-400 tracking-tight">₹{analytics.lossInr.toLocaleString("en-IN")}</span>
+            </div>
+            <p className="text-xs text-slate-500 mt-4">Projected Weight Deficit: <strong className="text-slate-300 font-mono">{analytics.lossKg} kg</strong></p>
           </div>
 
-          <div className="glass-panel rounded-3xl p-8 relative overflow-hidden">
-            <p className="text-slate-400 text-xs font-bold tracking-widest">BIOLOGICAL FUNGAL RISK</p>
-            <h2 className={`text-5xl font-black mt-4 tracking-tight ${
-              analytics.fungalRisk === "HIGH" ? "text-red-500" : analytics.fungalRisk === "MEDIUM" ? "text-yellow-400" : "text-emerald-400"
-            }`}>
-              {analytics.fungalRisk}
-            </h2>
-            <p className="text-slate-500 text-sm mt-1">Mold Spore Proliferation Ratio</p>
+          {/* Fungal Growth Prediction */}
+          <div className="glass-panel p-8">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Fungal Proliferation Risk</h3>
+            <div className="mt-6">
+              <span className={`text-5xl font-black tracking-tight ${analytics.fungalRisk === 'HIGH' ? 'text-red-400' : 'text-emerald-400'}`}>
+                {analytics.fungalRisk}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-4">Calculated via Biological Activity Index curves</p>
           </div>
         </section>
 
-        {/* SIMULATOR + RECOMMENDATIONS */}
+        {/* INTERACTIVE SIMULATION CONTAINER */}
         <section className="grid lg:grid-cols-12 gap-8">
-          
-          {/* INTERACTIVE CONTROLS */}
-          <div className="glass-panel rounded-3xl p-8 lg:col-span-5 space-y-6">
-            <h2 className="text-xl font-bold tracking-tight">Interactive Storage Simulator</h2>
-            
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-400 uppercase">Crop Classification Profile</label>
-              <select 
-                value={cropType} 
-                onChange={(e) => setCropType(e.target.value)}
-                className="w-full bg-slate-900 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-emerald-400 text-white"
-              >
-                <option value="Paddy (Rice)">Paddy (Rice)</option>
-                <option value="Wheat">Wheat</option>
-                <option value="Maize">Maize</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-300">Moisture Balance</span>
-                <span className="font-mono text-yellow-400 font-bold">{moisture}%</span>
+          <div className="glass-panel p-8 lg:col-span-5 space-y-6 bg-slate-900/30">
+            <h3 className="text-base font-bold text-white tracking-tight">Parameters Assessment Input</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-mono text-slate-400">CROP CLASSIFICATION</label>
+                <select value={cropType} onChange={(e) => setCropType(e.target.value)} className="w-full mt-1 bg-slate-950 border border-white/10 rounded-xl p-2.5 text-sm focus:border-emerald-400 text-white outline-none">
+                  <option value="Paddy (Rice)">Paddy (Rice)</option>
+                  <option value="Wheat">Wheat</option>
+                  <option value="Maize">Maize</option>
+                </select>
               </div>
-              <input type="range" min="5" max="40" step="0.1" value={moisture} onChange={(e) => setMoisture(parseFloat(e.target.value))} className="w-full accent-emerald-400 bg-slate-800" />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-300">Core Temperature</span>
-                <span className="font-mono text-cyan-400 font-bold">{temperature}°C</span>
+              <div>
+                <div className="flex justify-between text-xs font-mono text-slate-400"><span>MOISTURE</span><span className="text-emerald-400">{moisture}%</span></div>
+                <input type="range" min="5" max="40" step="0.1" value={moisture} onChange={(e) => setMoisture(parseFloat(e.target.value))} className="w-full mt-1 accent-emerald-400" />
               </div>
-              <input type="range" min="0" max="75" step="0.5" value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))} className="w-full accent-cyan-400 bg-slate-800" />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-300">Ambient Humidity</span>
-                <span className="font-mono text-emerald-400 font-bold">{humidity}%</span>
+              <div>
+                <div className="flex justify-between text-xs font-mono text-slate-400"><span>TEMPERATURE</span><span className="text-cyan-400">{temperature}°C</span></div>
+                <input type="range" min="0" max="75" step="0.5" value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))} className="w-full mt-1 accent-cyan-400" />
               </div>
-              <input type="range" min="10" max="100" step="1" value={humidity} onChange={(e) => setHumidity(parseFloat(e.target.value))} className="w-full accent-emerald-400 bg-slate-800" />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-slate-300">Batch Mass Load</span>
-                <span className="font-mono text-slate-400">{mass.toLocaleString()} kg</span>
-              </div>
-              <input type="range" min="1000" max="50000" step="500" value={mass} onChange={(e) => setMass(parseInt(e.target.value))} className="w-full accent-slate-400 bg-slate-800" />
             </div>
           </div>
 
-          {/* DYNAMIC ACTIONABLE RECOMMENDATIONS */}
-          <div className="glass-panel rounded-3xl p-8 lg:col-span-7 flex flex-col justify-between">
-            <div>
-              <h2 className="text-xl font-bold mb-6 tracking-tight">Recommendation Advisories</h2>
-              <div className="space-y-3">
-                {analytics.advisories.map((advice, i) => (
-                  <div key={i} className={`p-5 rounded-2xl border transition duration-300 ${
-                    advice.includes("CRITICAL") || advice.includes("SPIKE") || advice.includes("RISK")
-                      ? "bg-red-500/10 border-red-500/20 text-red-200" 
-                      : advice.includes("HOTSPOT") || advice.includes("Caution")
-                      ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-200"
-                      : "bg-emerald-500/5 border-emerald-500/10 text-emerald-300"
-                  }`}>
-                    <p className="text-sm font-medium leading-relaxed">{advice}</p>
-                  </div>
-                ))}
-              </div>
+          {/* SECTION 7: ACTIONABLE RECOMMENDATION ENGINE */}
+          <div className="glass-panel p-8 lg:col-span-7 space-y-4">
+            <h3 className="text-base font-bold text-white tracking-tight">Recommendation Decision Engine</h3>
+            <div className="space-y-3">
+              {analytics.advisories.map((advice, i) => (
+                <div key={i} className={`p-4 rounded-xl border text-sm leading-relaxed ${advice.includes("CRITICAL") ? 'bg-red-500/10 border-red-500/20 text-red-300' : 'bg-slate-900 border-white/5 text-slate-300'}`}>
+                  {advice}
+                </div>
+              ))}
             </div>
-            
-            {loading && <p className="text-xs text-slate-500 font-mono text-right mt-4">Analyzing parameters via engine pipeline...</p>}
           </div>
         </section>
 
-        {/* DYNAMIC CLP MATRIX LAYER */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-bold tracking-tight">Critical Loss Point Matrix</h2>
+        {/* SECTION 5: CRITICAL LOSS POINT MATRIX */}
+        <section className="space-y-4">
+          <h3 className="text-lg font-bold text-white tracking-tight">{activeLang.clp}</h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {[
-              { id: "CLP-1", label: "Moisture Cap", active: analytics.clpMatrix.moisture },
-              { id: "CLP-2", label: "Thermal Limit", active: analytics.clpMatrix.temp },
-              { id: "CLP-3", label: "Humidity Ceiling", active: analytics.clpMatrix.humidity },
-              { id: "CLP-4", label: "Timeline Limit", active: analytics.clpMatrix.duration },
-              { id: "CLP-5", label: "Mold Proliferation", active: analytics.clpMatrix.fungal },
-            ].map((clp) => (
-              <div 
-                key={clp.id} 
-                className={`glass-panel rounded-2xl p-5 text-center border transition-all duration-300 ${
-                  clp.active ? "border-red-500/40 bg-red-950/20 shadow-[0_0_15px_rgba(239,68,68,0.1)]" : "border-white/5"
-                }`}
-              >
-                <span className={`text-xs font-bold px-2 py-0.5 rounded-md ${clp.active ? 'bg-red-500/20 text-red-400' : 'bg-slate-800 text-slate-400'}`}>
-                  {clp.id}
-                </span>
-                <h3 className="font-bold text-sm mt-3 text-slate-200">{clp.label}</h3>
-                <p className={`text-xs mt-1 font-semibold ${clp.active ? "text-red-400" : "text-slate-500"}`}>
-                  {clp.active ? "⚠️ VIOLATED" : "🟢 NOMINAL"}
+              { code: "CLP-1", name: "Moisture Ceiling", active: analytics.clp.moisture },
+              { code: "CLP-2", name: "Thermal Hotspot", active: analytics.clp.temp },
+              { code: "CLP-3", name: "Relative Humidity", active: analytics.clp.humidity },
+              { code: "CLP-4", name: "Duration Vault", active: analytics.clp.duration },
+              { code: "CLP-5", name: "Fungal Incursion", active: analytics.clp.fungal },
+            ].map((node) => (
+              <div key={node.code} className={`glass-panel p-5 text-center border ${node.active ? 'border-red-500/30 bg-red-950/10' : 'border-white/5'}`}>
+                <span className="text-xs font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">{node.code}</span>
+                <p className="text-xs font-bold mt-3 text-slate-300">{node.name}</p>
+                <p className={`text-xs mt-1 font-mono font-bold ${node.active ? 'text-red-400' : 'text-slate-600'}`}>
+                  {node.active ? "⚠️ CRITICAL" : "🟢 NOMINAL"}
                 </p>
               </div>
             ))}
           </div>
-        </section>
-
-        {/* HISTORIC LEDGER */}
-        <section className="glass-panel rounded-3xl p-8">
-          <h2 className="text-xl font-bold mb-6 tracking-tight">Historic Ledger Logs</h2>
-          <div className="space-y-4">
-            <div className="border-l-2 border-emerald-400 pl-5">
-              <h3 className="text-sm font-bold text-slate-200">June 21 — Realtime Telemetry Pass</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Dynamic batch computation matched to {cropType} constraints</p>
-            </div>
-            <div className="border-l-2 border-slate-700 pl-5">
-              <h3 className="text-sm font-bold text-slate-400">June 10 — Inter-Drying Cycle Baseline</h3>
-              <p className="text-xs text-slate-500 mt-0.5">Static diagnostic record filed successfully</p>
-            </div>
-          </div>
-        </section>
-
-        {/* COMPILER EXPORT */}
-        <section className="glass-panel rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold tracking-tight">IEEE Compliant Assessment Report</h2>
-            <p className="text-xs text-slate-400 mt-1">Generates complete dataset breakdown logs with matching baseline profiles.</p>
-          </div>
-          <button className="w-full sm:w-auto bg-emerald-400 text-slate-950 font-bold px-8 py-3.5 rounded-xl hover:bg-emerald-300 transition-all font-mono text-sm tracking-wide shadow-lg shadow-emerald-500/10">
-            EXPORT ANALYSIS PDF
-          </button>
         </section>
 
       </main>
