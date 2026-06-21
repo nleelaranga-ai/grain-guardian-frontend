@@ -1,60 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;550;600;700;900&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  /* Google AI Studio & Mode.com Premium Enterprise Color Palette */
-  --color-slate-950: #020617; /* Base obsidian black workspace background */
-  --color-surface-primary: rgba(15, 23, 42, 0.72); /* Primary frosted glass panel background */
-  --color-surface-secondary: rgba(15, 23, 42, 0.55); /* Nested telemetry component card background */
-  --color-studio-border: rgba(255, 255, 255, 0.06); /* Thin crisp micro-separators */
-  
-  --color-safe-green: #00FF9D; /* Primary accent: Nominal/Compliant conditions */
-  --color-accent-cyan: #00D9FF; /* Secondary accent: Active charting metrics & knobs */
-  --color-warning-yellow: #FACC15; /* Warning tier boundary flag */
-  --color-critical-red: #FF5A5F; /* Critical threat / Post-harvest deterioration alert */
-  
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #94A3B8;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Premium Micro-Interactions System */
-  --animate-studio-fade: studioFade 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-
-  @keyframes studioFade {
-    0% { opacity: 0; transform: translateY(8px); filter: blur(4px); }
-    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-  }
+  /* Google AI Studio Inspired Color Palette */
+  --color-primary: #00FF9D;       /* Premium Safe Green */
+  --color-secondary: #00D9FF;     /* Accent Telemetry Cyan */
+  --color-warning: #FACC15;       /* Mid-Tier Caution Yellow */
+  --color-critical: #FF5A5F;      /* High-Risk Threat Red */
+  --color-bg-dark: #020617;       /* Off-black vacuum background */
+  --color-surface-studio: rgba(15, 23, 42, 0.72);
+  --color-surface-subtle: rgba(15, 23, 42, 0.45);
+  --color-studio-border: rgba(255, 255, 255, 0.06);
 }
 
-@layer base {
-  body {
-    background-color: var(--color-slate-950);
-    color: var(--color-text-primary);
-    font-family: "Outfit", "Inter", -apple-system, sans-serif;
-    overflow-x: hidden;
-    letter-spacing: -0.01em;
-  }
+/* Base resets & styled workspace scrollbars */
+html {
+  scroll-behavior: smooth;
+  background-color: #020617;
+  color: #F8FAFC;
+  font-family: var(--font-sans);
 }
 
-/* 70% Content / 30% Space High Density Layout Constraints */
-.studio-container {
-  max-width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(16px, 4vw, 48px);
-  padding-right: clamp(16px, 4vw, 48px);
-}
-
-.studio-section {
-  padding-top: clamp(64px, 6vw, 112px);
-  padding-bottom: clamp(64px, 6vw, 112px);
-  border-bottom: 1px solid var(--color-studio-border);
-}
-
-/* Glassmorphism System Cards */
+/* Compact Info-Dense UI Panels (70% Content Focus) */
 .studio-panel {
-  background: var(--color-surface-primary);
+  background: rgba(15, 23, 42, 0.72);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-studio-border);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -65,15 +41,22 @@
   transform: translateY(-2px);
 }
 
-.studio-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-text-secondary);
+/* Ambient Magic Neon Drops */
+.neon-magic-nav {
+  position: relative;
+}
+.neon-magic-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 5%;
+  width: 90%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00D9FF, #00FF9D, transparent);
+  opacity: 0.7;
 }
 
-/* Custom Interactive Developer-Console Sliders */
+/* Workspace Native Sliders Custom-Tuned */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
@@ -91,7 +74,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 14px;
   border-radius: 50%;
   background: #00D9FF;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.7);
+  box-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
   cursor: pointer;
   transition: transform 0.1s ease;
 }
@@ -100,16 +83,21 @@ input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.3);
 }
 
-/* Professional Telemetry Quality Report Print Overrides */
+/* Print Overrides for Official Telemetry Certificates */
 @media print {
-  body { background: #ffffff !important; color: #000000 !important; }
-  nav, .studio-inputs, button, input, select { display: none !important; }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print, nav, button, input, select, .input-chassis {
+    display: none !important;
+  }
   .studio-panel {
     background: transparent !important;
     border: 1px solid #000000 !important;
     color: #000000 !important;
     box-shadow: none !important;
     page-break-inside: avoid;
-    border-radius: 4px;
+    border-radius: 8px;
   }
 }
