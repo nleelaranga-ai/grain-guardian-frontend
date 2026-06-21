@@ -1,19 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-slate-950: #020617;
-  --color-slate-900: #0c121e;
-  --color-slate-850: #111a2e;
-  --color-emerald-400: #00FF9D;
-  --color-cyan-400: #00D9FF;
+  /* Brand System Color Mappings */
+  --color-slate-950: #020617; /* Deep Obsidian Base Background */
+  --color-slate-900: #0F172A; /* Premium Slate Cards */
+  
+  --color-emerald-400: #00FF9D; /* Primary Accent: Nominal/Safe */
+  --color-cyan-400: #00D9FF; /* Secondary Accent: Telemetry Metrics */
+  --color-yellow-400: #FACC15; /* Warning Level Indicator */
+  --color-red-400: #FF5A5F; /* Danger Level Indicator */
 
+  /* Typography System */
   --font-sans: "Inter", "system-ui", sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-mono: "JetBrains Mono", "monospace";
 
-  --animate-fade-in: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Motion & Animations */
+  --animate-fade-in: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
   @keyframes fadeIn {
-    0% { opacity: 0; transform: translateY(8px); }
+    0% { opacity: 0; transform: translateY(12px); }
     100% { opacity: 1; transform: translateY(0); }
   }
 }
@@ -21,15 +27,23 @@
 @layer base {
   body {
     background-color: var(--color-slate-950);
-    color: #f8fafc;
+    color: #F8FAFC;
+    font-family: var(--font-sans);
     overflow-x: hidden;
   }
 }
 
-/* Glassmorphism System Panels */
+/* Premium Component Radius & Glassmorphism Spec */
 .glass-panel {
-  background: rgba(12, 18, 30, 0.45);
+  background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px; /* Strict 24px Spec Requirement */
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 255, 157, 0.15);
+  box-shadow: 0 0 25px rgba(0, 255, 157, 0.03);
 }
