@@ -1,225 +1,256 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Hero from './components/Hero';
-import Sidebar from './components/Sidebar';
-import Home from './components/Home';
-import CLPGrid from './components/CLPGrid';
-import HistoryTable from './components/HistoryTable';
-import ReportPanel from './components/ReportPanel';
-import { useTelemetry } from './hooks/useTelemetry';
-import { useHistory } from './hooks/useHistory';
-import { useAnalysis } from './hooks/useAnalysis';
-
-export default function App() {
-  const [platformLaunched, setPlatformLaunched] = useState(false);
-  const [currentScreen, setCurrentScreen] = useState<'dashboard' | 'clp' | 'history' | 'reports' | 'help' | 'settings'>('dashboard');
-  const [lang, setLang] = useState<'EN' | 'TE'>('EN');
-
-  const {
-    selectedCropIndex,
-    setSelectedCropIndex,
-    bleConnected,
-    setBleConnected,
-    isStorageMode,
-    setIsStorageMode,
-    tempT1,
-    setTempT1,
-    tempT2,
-    setTempT2,
-    tempT3,
-    setTempT3,
-    interGranularHumidity,
-    setInterGranularHumidity,
-    ambientTemp,
-    setAmbientTemp,
-    ambientHumidity,
-    setAmbientHumidity,
-    activeCrop,
-    currentEMC,
-    tempGradient,
-    bai,
-    fungalRiskStatus,
-    forceScenario
-  } = useTelemetry();
-
-  const {
-    farmerName,
-    setFarmerName,
-    fpoName,
-    setFpoName,
-    activeBatchId,
-    setActiveBatchId,
-    initialMassKg,
-    setInitialMassKg,
-    storageDurationDays,
-    setStorageDurationDays,
-    historyLog,
-    executeInspectionLog
-  } = useHistory(activeCrop, isStorageMode, currentEMC, tempT2, tempT3, ambientTemp);
-
-  const {
-    ghiScore,
-    lossInr,
-    weightLossKg,
-    apiStatus,
-    handleRunScan,
-    violations,
-    currentStatus // Successfully bound from calculation context
-  } = useAnalysis(
-    activeCrop, 
-    currentEMC, 
-    isStorageMode, 
-    tempT1, 
-    tempT2, 
-    tempT3, 
-    interGranularHumidity, 
-    ambientTemp, 
-    ambientHumidity, 
-    initialMassKg, 
-    storageDurationDays, 
-    fungalRiskStatus
-  );
-
+export default function Page() {
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col font-sans">
-      {!platformLaunched ? (
-        <Hero 
-          lang={lang} 
-          setLang={setLang} 
-          setPlatformLaunched={setPlatformLaunched} 
-          ghiScore={ghiScore} 
-          currentEMC={currentEMC} 
-          lossInr={lossInr} 
-          activeCrop={activeCrop} 
-        />
-      ) : (
-        <div className="flex-1 flex flex-col xl:flex-row min-h-screen">
-          <Sidebar 
-            lang={lang} 
-            setLang={setLang} 
-            currentScreen={currentScreen} 
-            setCurrentScreen={setCurrentScreen} 
-            setPlatformLaunched={setPlatformLaunched} 
-            bleConnected={bleConnected} 
-            setBleConnected={setBleConnected} 
-            tempT3={tempT3} 
-            interGranularHumidity={interGranularHumidity} 
-            isStorageMode={isStorageMode} 
-          />
+    <div className="min-h-screen bg-slate-950 text-white">
 
-          <main className="flex-1 p-6 lg:p-12 overflow-y-auto max-w-6xl mx-auto w-full">
-            {currentScreen === 'dashboard' && (
-              <Home
-                lang={lang}
-                activeCrop={activeCrop}
-                selectedCropIndex={selectedCropIndex}
-                setSelectedCropIndex={setSelectedCropIndex}
-                isStorageMode={isStorageMode}
-                setIsStorageMode={setIsStorageMode}
-                tempT1={tempT1}
-                setTempT1={setTempT1}
-                tempT2={tempT2}
-                setTempT2={setTempT2}
-                tempT3={tempT3}
-                setTempT3={setTempT3}
-                interGranularHumidity={interGranularHumidity}
-                setInterGranularHumidity={setInterGranularHumidity}
-                ambientTemp={ambientTemp}
-                setAmbientTemp={setAmbientTemp}
-                ambientHumidity={ambientHumidity}
-                setAmbientHumidity={setAmbientHumidity}
-                currentEMC={currentEMC}
-                ghiScore={ghiScore}
-                apiStatus={apiStatus}
-                lossInr={lossInr}
-                weightLossKg={weightLossKg}
-                fungalRiskStatus={fungalRiskStatus}
-                bai={bai}
-                historyLog={historyLog}
-                tempGradient={tempGradient}
-                forceScenario={forceScenario}
-                handleRunScan={handleRunScan}
-                executeInspectionLog={executeInspectionLog}
-                currentStatus={currentStatus}
-              />
-            )}
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto h-20 px-6 flex items-center justify-between">
 
-            {currentScreen === 'clp' && (
-              <CLPGrid
-                lang={lang}
-                violations={violations}
-                currentEMC={currentEMC}
-                activeCrop={activeCrop}
-                tempGradient={tempGradient}
-                tempT1={tempT1}
-                tempT2={tempT2}
-                tempT3={tempT3}
-                storageDurationDays={storageDurationDays}
-                bai={bai}
-                fungalRiskStatus={fungalRiskStatus}
-              />
-            )}
+          <div>
+            <h1 className="text-2xl font-black text-emerald-400">
+              GRAIN GUARDIAN
+            </h1>
 
-            {currentScreen === 'history' && (
-              <HistoryTable
-                lang={lang}
-                historyLog={historyLog}
-              />
-            )}
+            <p className="text-xs text-slate-400">
+              Decision Intelligence V3
+            </p>
+          </div>
 
-            {currentScreen === 'reports' && (
-              <ReportPanel
-                lang={lang}
-                fpoName={fpoName}
-                activeBatchId={activeBatchId}
-                farmerName={farmerName}
-                ghiScore={ghiScore}
-                currentEMC={currentEMC}
-                fungalRiskStatus={fungalRiskStatus}
-                currentStatus={currentStatus}
-                violations={violations}
-                weightLossKg={weightLossKg}
-                lossInr={lossInr}
-                initialMassKg={initialMassKg}
-                activeCrop={activeCrop}
-                tempT1={tempT1}
-                tempT2={tempT2}
-                tempT3={tempT3}
-                tempGradient={tempGradient}
-                storageDurationDays={storageDurationDays}
-                bai={bai}
-              />
-            )}
+          <div className="flex gap-3">
 
-            {currentScreen === 'help' && (
-              <div className="space-y-4 text-left animate-fade-in font-sans">
-                <h3 className="text-xl font-black text-white uppercase">Hardware Calibration Center</h3>
-                <div className="bg-slate-900 border border-white/5 p-6 rounded-xl space-y-3">
-                  <h4 className="text-sm font-bold text-white uppercase">Dallas Sensor Stack Calibration Formula</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">Our lances rely on standard 1-Wire thermal sensors mapped cleanly inside a structural steel enclosure. Before deployment, submerge the complete assembly probe inside an ice-water solution (0.0°C) to correct structural skews within strict ±0.2°C bounds.</p>
-                </div>
-              </div>
-            )}
+            <div className="px-4 py-2 rounded-xl bg-slate-900">
+              🌐 Telugu
+            </div>
 
-            {currentScreen === 'settings' && (
-              <div className="space-y-4 text-left animate-fade-in font-sans">
-                <h3 className="text-xl font-black text-white uppercase font-sans">Console Settings</h3>
-                <div className="bg-slate-900 border border-white/5 p-6 rounded-xl max-w-xl space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-xs text-slate-400 font-bold uppercase">Farmer Identity Title</label>
-                    <input type="text" value={farmerName} onChange={(e) => setFarmerName(e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-[#00FF9D]" />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-xs text-slate-400 font-bold uppercase">FPO Organization Name</label>
-                    <input type="text" value={fpoName} onChange={(e) => setFpoName(e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-[#00FF9D]" />
-                  </div>
-                </div>
-              </div>
-            )}
-          </main>
+            <div className="px-4 py-2 rounded-xl bg-emerald-500/20 text-emerald-300">
+              ● SAFE
+            </div>
+
+          </div>
+
         </div>
-      )}
+      </header>
+
+      <main className="max-w-7xl mx-auto px-6 py-12 space-y-10">
+
+        {/* HERO */}
+        <section className="text-center space-y-8">
+
+          <span className="inline-block px-4 py-2 rounded-full bg-emerald-500/10 text-emerald-400 font-bold">
+            PREMIUM GRAIN DIAGNOSTICS
+          </span>
+
+          <h1 className="text-6xl lg:text-7xl font-black">
+            Built for clarity.
+            <br />
+            Designed for action.
+          </h1>
+
+          <p className="max-w-3xl mx-auto text-slate-400 text-lg">
+            AI-powered post-harvest intelligence
+            platform combining sensor telemetry,
+            fungal prediction and economic loss
+            analytics.
+          </p>
+
+        </section>
+
+        {/* KPI CARDS */}
+        <section className="grid md:grid-cols-3 gap-6">
+
+          <div className="glass-card card-hover rounded-3xl p-8">
+            <p className="text-slate-400 text-sm">
+              GRAIN HEALTH INDEX
+            </p>
+
+            <h2 className="text-6xl font-black text-emerald-400 mt-4">
+              92
+            </h2>
+
+            <p className="text-slate-500 mt-2">
+              /100
+            </p>
+          </div>
+
+          <div className="glass-card card-hover rounded-3xl p-8">
+            <p className="text-slate-400 text-sm">
+              ESTIMATED LOSS
+            </p>
+
+            <h2 className="text-5xl font-black text-red-400 mt-4">
+              ₹12,540
+            </h2>
+          </div>
+
+          <div className="glass-card card-hover rounded-3xl p-8">
+            <p className="text-slate-400 text-sm">
+              FUNGAL RISK
+            </p>
+
+            <h2 className="text-5xl font-black text-yellow-400 mt-4">
+              LOW
+            </h2>
+          </div>
+
+        </section>
+
+        {/* TELEMETRY + RECOMMENDATIONS */}
+        <section className="grid lg:grid-cols-2 gap-8">
+
+          <div className="glass-card rounded-3xl p-8">
+
+            <h2 className="text-2xl font-bold mb-8">
+              Probe Telemetry
+            </h2>
+
+            <div className="space-y-6">
+
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span>Temperature</span>
+                  <span>34°C</span>
+                </div>
+
+                <div className="h-3 rounded-full bg-slate-800 overflow-hidden">
+                  <div className="w-[65%] h-full bg-cyan-400"></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span>Humidity</span>
+                  <span>65%</span>
+                </div>
+
+                <div className="h-3 rounded-full bg-slate-800 overflow-hidden">
+                  <div className="w-[70%] h-full bg-emerald-400"></div>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex justify-between mb-2">
+                  <span>Moisture</span>
+                  <span>14%</span>
+                </div>
+
+                <div className="h-3 rounded-full bg-slate-800 overflow-hidden">
+                  <div className="w-[45%] h-full bg-yellow-400"></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="glass-card rounded-3xl p-8">
+
+            <h2 className="text-2xl font-bold mb-8">
+              Recommendations
+            </h2>
+
+            <div className="space-y-4">
+
+              <div className="p-5 rounded-2xl bg-red-500/10 border border-red-500/20">
+                🔴 Moisture exceeds threshold.
+              </div>
+
+              <div className="p-5 rounded-2xl bg-yellow-500/10 border border-yellow-500/20">
+                🟡 Internal thermal hotspot developing.
+              </div>
+
+              <div className="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+                🟢 Storage environment stable.
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* CLP */}
+        <section>
+
+          <h2 className="text-3xl font-bold mb-6">
+            Critical Loss Point Matrix
+          </h2>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-6">
+
+            {[
+              "CLP-1",
+              "CLP-2",
+              "CLP-3",
+              "CLP-4",
+              "CLP-5",
+            ].map((item) => (
+              <div
+                key={item}
+                className="glass-card rounded-3xl p-6 text-center"
+              >
+                <h3 className="font-bold text-lg">
+                  {item}
+                </h3>
+
+                <p className="text-slate-400 mt-3">
+                  Monitoring Active
+                </p>
+              </div>
+            ))}
+
+          </div>
+
+        </section>
+
+        {/* HISTORY */}
+        <section className="glass-card rounded-3xl p-8">
+
+          <h2 className="text-2xl font-bold mb-8">
+            Historic Ledger
+          </h2>
+
+          <div className="space-y-6">
+
+            <div className="border-l-2 border-emerald-400 pl-6">
+              <h3 className="font-bold">
+                June 02
+              </h3>
+
+              <p className="text-slate-400">
+                Paddy Analysis Completed
+              </p>
+            </div>
+
+            <div className="border-l-2 border-cyan-400 pl-6">
+              <h3 className="font-bold">
+                June 10
+              </h3>
+
+              <p className="text-slate-400">
+                Inter-Drying Phase Recorded
+              </p>
+            </div>
+
+          </div>
+
+        </section>
+
+        {/* REPORT */}
+        <section className="glass-card rounded-3xl p-8">
+
+          <h2 className="text-2xl font-bold mb-8">
+            Report Compiler
+          </h2>
+
+          <button className="bg-emerald-400 text-slate-950 font-bold px-8 py-4 rounded-2xl">
+            Export PDF
+          </button>
+
+        </section>
+
+      </main>
     </div>
   );
 }
