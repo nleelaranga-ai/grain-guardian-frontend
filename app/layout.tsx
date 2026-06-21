@@ -2,7 +2,7 @@ import './globals.css';
 import React from 'react';
 
 export const metadata = {
-  title: 'GrainGuardian - Operational Decision Intelligence',
+  title: 'GrainGuardian - High Density Decision Intelligence Architecture',
   description: 'Analytics-Driven Multi-Crop Post-Harvest Storage Assessment Suite',
 };
 
