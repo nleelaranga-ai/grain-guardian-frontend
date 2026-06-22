@@ -159,7 +159,7 @@ export default function GrainGuardianStudioEngine() {
     localStorage.setItem('grain_guardian_audit_logs', JSON.stringify(updated));
   };
 
-  // Live Proxy Consult Passage to Gemini Expert AI Model
+  // Live Proxy Consult Passage to Gemini Expert AI Model (FIXED SYNTAX BELOW)
   const consultGeminiAdvisor = async () => {
     setAiLoading(true);
     setAiResponse(null);
@@ -180,7 +180,7 @@ export default function GrainGuardianStudioEngine() {
       }
     } catch {
       setAiResponse({ error: true });
-    } relative {
+    } finally {
       setAiLoading(false);
     }
   };
@@ -242,7 +242,7 @@ export default function GrainGuardianStudioEngine() {
   return (
     <div className="min-h-screen bg-[#020617] text-slate-100 select-none antialiased">
       
-      {/* ENTERPRISE LOGISTIC FIXED NAVBAR */}
+      {/* FIXED NAVBAR */}
       <nav className="fixed top-0 left-0 w-full h-[72px] border-b border-white/5 bg-[#020617]/75 backdrop-blur-xl z-50 px-6 md:px-12 flex items-center justify-between neon-magic-nav no-print">
         <div className="flex items-center space-x-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#00D9FF] to-[#00FF9D] flex items-center justify-center shadow-md">
@@ -274,7 +274,7 @@ export default function GrainGuardianStudioEngine() {
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-28 pb-20 space-y-12">
         
         {/* HERO HEADER */}
-        <header className="grid lg:grid-cols-12 gap-8 items-center border-b border-white/5 pb-10 no-print animate-studio-fade">
+        <header className="grid lg:grid-cols-12 gap-8 items-center border-b border-white/5 pb-10 no-print">
           <div className="lg:col-span-7 space-y-4 text-left">
             <span className="inline-block text-[10px] font-bold font-mono tracking-widest text-[#00D9FF] bg-[#00D9FF]/10 border border-[#00D9FF]/20 px-2.5 py-1 rounded-md uppercase">
               AI-Native Operational Core Suite
@@ -316,7 +316,7 @@ export default function GrainGuardianStudioEngine() {
           </div>
         </header>
 
-        {/* HIGH DENSITY KPI METRICS ROW */}
+        {/* METRICS QUAD GRID */}
         <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="studio-panel p-5">
             <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 flex items-center space-x-1.5">
@@ -348,7 +348,7 @@ export default function GrainGuardianStudioEngine() {
           </div>
         </section>
 
-        {/* SPLIT EXPERT WORKSPACE SECTION (2 columns) */}
+        {/* SPLIT EXPERT WORKSPACE SECTION */}
         <section className="grid lg:grid-cols-12 gap-6 items-stretch">
           
           {/* LEFT SLIDER SETTING INTERFACE */}
@@ -449,9 +449,9 @@ export default function GrainGuardianStudioEngine() {
                   <span className="text-[#FF5A5F] font-bold">{dryMatterLossRate}% / 24h</span>
                 </div>
 
-                {/* PSYCHROMETRIC BALANCING MATRICES FOR EXPERT OPERATORS */}
+                {/* OPERATIONAL MATRICES FOR EXPERT OPERATORS */}
                 {expertMode && (
-                  <div className="pt-2 border-t border-white/5 text-[10px] text-slate-400 grid grid-cols-2 gap-2 font-sans animate-studio-fade">
+                  <div className="pt-2 border-t border-white/5 text-[10px] text-slate-400 grid grid-cols-2 gap-2 font-sans">
                     <div className="bg-[#020617]/70 p-2.5 rounded-xl border border-white/5">
                       <span className="text-[9px] font-mono block uppercase text-slate-500">Vapor Tension (EMC)</span>
                       <span className="text-[#00D9FF] font-bold font-mono">{emcCalculated} kPa</span>
@@ -469,7 +469,7 @@ export default function GrainGuardianStudioEngine() {
           </div>
         </section>
 
-        {/* PRESCRIPTIVE ALERTS DIRECTIVES MATRIX */}
+        {/* RECOVERY RULES MATRIX */}
         <section className="space-y-4">
           <h3 className="text-xs font-black tracking-widest uppercase text-slate-400 flex items-center space-x-2">
             <span>🛡️</span> <span>{UI.actions}</span>
@@ -483,7 +483,7 @@ export default function GrainGuardianStudioEngine() {
           </div>
         </section>
 
-        {/* CHATGPT-STYLE EXPERT ADVISOR PROXY CONTAINER */}
+        {/* AI ADVISOR PANELS WITH CORRECTED SYNTAX LOOP */}
         <section className="studio-panel p-5 bg-[#090d1a]/80 border border-white/10 no-print">
           <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-4">
             <div className="flex items-center space-x-2">
@@ -548,7 +548,7 @@ export default function GrainGuardianStudioEngine() {
           </div>
         </section>
 
-        {/* TECHNICAL SUMMARY CERTIFICATE PRINTER COMPILER */}
+        {/* REPORT PRINTER */}
         <section className="studio-panel p-6 bg-slate-900/40 text-center flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10 page-break-inside-avoid">
           <div className="text-left">
             <h4 className="font-bold text-sm text-white font-display tracking-wide">{UI.certificate}</h4>
